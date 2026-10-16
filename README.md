@@ -8,7 +8,7 @@ Site estático que substitui o site do Kenlo. Ele é gerado a partir dos imóvei
 2. O gerente aprova. O CRM grava, pelo conector GitHub do gerente:
    - `data/imoveis.json`, com os dados públicos dos imóveis aprovados (sem dados do proprietário);
    - `data/fotos/<id>.b64`, uma foto por arquivo (JPEG em data URL).
-3. Cada gravação na branch `main` dispara o GitHub Actions (`.github/workflows/pages.yml`), que roda `build.py` e publica o site no GitHub Pages.
+3. Cada gravação na branch `main` dispara o GitHub Actions (`.github/workflows/pages.yml`), que roda `build.py` e publica o resultado no ramo `gh-pages`, servido pelo GitHub Pages.
 
 Quando o gerente tira um imóvel do site, o CRM regrava `data/imoveis.json` sem ele.
 
