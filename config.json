@@ -1,0 +1,26 @@
+{
+  "nome": "Telecasa Negócios Imobiliários",
+  "cidade": "Uberaba",
+  "descricao": "Telecasa Negócios Imobiliários: casas, apartamentos, terrenos e imóveis comerciais para comprar ou alugar em Uberaba/MG.",
+  "creci": "6357J",
+  "whatsapp": "5534996601800",
+  "fone_whats": "(34) 99660-1800",
+  "fone_fixo": "(34) 3313-0800",
+  "fone_fixo_digits": "553433130800",
+  "endereco": "Rua Doutor Hildebrando Pontes, 278, Mercês, Uberaba/MG",
+  "horario": "Segunda a sexta, das 08:15 às 17:45",
+  "instagram": "https://www.instagram.com/telecasa_imobiliaria/",
+  "facebook": "https://www.facebook.com/telecasaimobiliaria",
+  "quem_somos": [
+    "Conhecida desde 2019 como Telecasa Imobiliária, hoje sob nova direção como Telecasa Negócios Imobiliários.",
+    "Buscamos a cada dia ser transparentes nos nossos negócios e ajudar cada cliente a realizar o seu sonho, cuidando de cada detalhe e da situação de cada um.",
+    "Contamos com uma equipe de especialistas: arquitetos, engenheiros, advogados, administradores, corretores, consultores de vendas e prestadores de serviço."
+  ],
+  "bancos": [
+    ["Caixa", "http://www8.caixa.gov.br/siopiinternet/simulaOperacaoInternet.do?method=inicializarCasoUso"],
+    ["Banco do Brasil", "https://www42.bb.com.br/portalbb/imobiliario/creditoimobiliario/simular,802,2250,2250.bbx"],
+    ["Itaú", "https://credito-imobiliario.itau.com.br/"],
+    ["Bradesco", "https://banco.bradesco/html/classic/produtos-servicos/emprestimo-e-financiamento/encontre-seu-credito/simuladores-imoveis.shtm"],
+    ["Santander", "https://www.webcasas.com.br/webcasas/?headerandfooter/#/dados-pessoais"]
+  ]
+}

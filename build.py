@@ -1,0 +1,405 @@
+#!/usr/bin/env python3
+"""Gera o site estático da Telecasa em _site/ a partir de data/.
+
+data/imoveis.json   lista de imóveis aprovados (escrita pelo CRM do Zero2)
+data/fotos/<id>.b64 cada foto como data URL JPEG (escrita pelo CRM)
+config.json         dados da imobiliária (telefones, endereço, textos)
+
+Só usa a biblioteca padrão do Python, para rodar no GitHub Actions sem instalar nada.
+"""
+import base64
+import html
+import json
+import os
+import re
+import shutil
+import sys
+import unicodedata
+from datetime import datetime, timezone
+
+ROOT = os.path.dirname(os.path.abspath(__file__))
+OUT = os.path.join(ROOT, "_site")
+E = lambda s: html.escape("" if s is None else str(s), quote=True)
+
+CFG = json.load(open(os.path.join(ROOT, "config.json"), encoding="utf-8"))
+_cname = os.path.join(ROOT, "CNAME")
+DOMAIN = open(_cname).read().strip() if os.path.exists(_cname) else ""
+# Sem domínio próprio o GitHub Pages serve em /<repo>/; com CNAME, na raiz.
+BASE = os.environ.get("SITE_BASE") or ("/" if DOMAIN else "/" + os.environ.get("REPO_NAME", "telecasa-site") + "/")
+SITE_URL = ("https://" + DOMAIN) if DOMAIN else os.environ.get("SITE_URL", "").rstrip("/")
+
+
+def slug(s):
+    s = unicodedata.normalize("NFD", str(s or "")).encode("ascii", "ignore").decode()
+    return re.sub(r"[^a-z0-9]+", "-", s.lower()).strip("-") or "imovel"
+
+
+def money(v):
+    try:
+        n = float(v)
+    except (TypeError, ValueError):
+        return ""
+    if n <= 0:
+        return ""
+    return "R$ " + f"{n:,.0f}".replace(",", ".")
+
+
+def num(v):
+    try:
+        n = float(v)
+    except (TypeError, ValueError):
+        return None
+    return n if n > 0 else None
+
+
+def m2(v):
+    n = num(v)
+    if not n:
+        return ""
+    s = f"{n:,.2f}".rstrip("0").rstrip(".").replace(",", "X").replace(".", ",").replace("X", ".")
+    return s + " m²"
+
+
+def wa(msg):
+    from urllib.parse import quote
+    return "https://wa.me/" + CFG["whatsapp"] + "?text=" + quote(msg)
+
+
+def finalidade(i):
+    p = str(i.get("pretensao") or "Venda")
+    return {"venda": "venda" in p.lower(), "aluguel": "alug" in p.lower()}
+
+
+def preco(i):
+    f = finalidade(i)
+    parts = []
+    if f["venda"] and money(i.get("valorVenda")):
+        parts.append(money(i.get("valorVenda")))
+    if f["aluguel"] and money(i.get("valorAluguel")):
+        parts.append(money(i.get("valorAluguel")) + "/mês")
+    return " · ".join(parts) or "Valor sob consulta"
+
+
+def load_imoveis():
+    p = os.path.join(ROOT, "data", "imoveis.json")
+    if not os.path.exists(p):
+        return []
+    d = json.load(open(p, encoding="utf-8"))
+    out = []
+    for i in d.get("imoveis", []):
+        if not i.get("codigo"):
+            continue
+        i["slug"] = slug(f'{i.get("tipo","")}-{i.get("bairro","")}-{i["codigo"]}')
+        i["fotos"] = [f for f in (i.get("fotos") or []) if re.fullmatch(r"[A-Za-z0-9_-]{1,80}", str(f))]
+        out.append(i)
+    out.sort(key=lambda i: str(i.get("publicadoEm") or ""), reverse=True)
+    return out
+
+
+def write_fotos(imoveis):
+    """Decodifica as fotos .b64 que algum imóvel publicado usa."""
+    dst = os.path.join(OUT, "fotos")
+    os.makedirs(dst, exist_ok=True)
+    have = set()
+    for i in imoveis:
+        ok = []
+        for f in i["fotos"]:
+            src = os.path.join(ROOT, "data", "fotos", f + ".b64")
+            if not os.path.exists(src):
+                print("aviso: foto ausente", f, "do imóvel", i["codigo"], file=sys.stderr)
+                continue
+            if f not in have:
+                txt = open(src, encoding="ascii").read().strip()
+                m = re.match(r"data:image/(jpeg|png|webp);base64,(.+)$", txt, re.S)
+                if not m:
+                    print("aviso: foto inválida", f, file=sys.stderr)
+                    continue
+                with open(os.path.join(dst, f + ".jpg"), "wb") as fh:
+                    fh.write(base64.b64decode(m.group(2)))
+                have.add(f)
+            ok.append(f)
+        i["fotos"] = ok
+
+
+def foto_url(f):
+    return BASE + "fotos/" + f + ".jpg"
+
+
+ICON = {
+    "wa": '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.6-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3Z"/></svg>',
+    "tel": '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>',
+}
+
+
+def layout(title, body, desc="", path="", og_img="", extra_head=""):
+    c = CFG
+    nav = [("imoveis/?p=venda", "Comprar"), ("imoveis/?p=aluguel", "Alugar"), ("anuncie/", "Anuncie seu imóvel"),
+           ("encomende/", "Encomende"), ("financiamento/", "Financiamento"), ("quem-somos/", "Quem somos"), ("contato/", "Contato")]
+    canon = (SITE_URL + BASE + path) if SITE_URL else ""
+    head_meta = f'<meta name="description" content="{E(desc or c["descricao"])}">'
+    head_meta += f'<meta property="og:title" content="{E(title)}"><meta property="og:description" content="{E(desc or c["descricao"])}"><meta property="og:type" content="website">'
+    if og_img and SITE_URL:
+        head_meta += f'<meta property="og:image" content="{E(SITE_URL + og_img)}">'
+    if canon:
+        head_meta += f'<link rel="canonical" href="{E(canon)}">'
+    return f'''<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{E(title)}</title>
+{head_meta}
+<link rel="icon" href="{BASE}assets/icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{BASE}assets/style.css">
+{extra_head}
+</head>
+<body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+<div class="topbar"><div class="wrap"><span>CRECI {E(c["creci"])} · {E(c["horario"])}</span><span><a href="tel:+{E(c["fone_fixo_digits"])}">{E(c["fone_fixo"])}</a> · <a href="https://wa.me/{E(c["whatsapp"])}" target="_blank" rel="noopener">WhatsApp {E(c["fone_whats"])}</a></span></div></div>
+<header class="hd"><div class="wrap">
+  <a class="logo" href="{BASE}" aria-label="{E(c["nome"])}, página inicial"><span class="mark">T</span><span><b>Telecasa</b><small>Negócios Imobiliários</small></span></a>
+  <button class="menu" aria-expanded="false" aria-controls="nav" aria-label="Abrir menu"><span></span></button>
+  <nav id="nav" aria-label="Principal">{"".join(f'<a href="{BASE}{h}">{t}</a>' for h, t in nav)}</nav>
+</div></header>
+<main id="conteudo">
+{body}
+</main>
+<footer class="ft"><div class="wrap">
+  <div><a class="logo" href="{BASE}"><span class="mark">T</span><span><b>Telecasa</b><small>Negócios Imobiliários</small></span></a>
+    <p>{E(c["endereco"])}<br>{E(c["horario"])}<br>CRECI {E(c["creci"])}</p></div>
+  <div><h2>Fale com a gente</h2><p><a href="https://wa.me/{E(c["whatsapp"])}" target="_blank" rel="noopener">WhatsApp {E(c["fone_whats"])}</a><br><a href="tel:+{E(c["fone_fixo_digits"])}">{E(c["fone_fixo"])}</a></p>
+    <p><a href="{E(c["instagram"])}" target="_blank" rel="noopener">Instagram</a> · <a href="{E(c["facebook"])}" target="_blank" rel="noopener">Facebook</a></p></div>
+  <div><h2>Imóveis</h2><p><a href="{BASE}imoveis/?p=venda">Comprar</a><br><a href="{BASE}imoveis/?p=aluguel">Alugar</a><br><a href="{BASE}anuncie/">Anuncie seu imóvel</a><br><a href="{BASE}encomende/">Encomende seu imóvel</a></p></div>
+  <p class="copy">© {datetime.now().year} {E(c["nome"])} · <a href="{BASE}privacidade/">Política de privacidade</a></p>
+</div></footer>
+<a class="wa-float" href="https://wa.me/{E(c["whatsapp"])}" target="_blank" rel="noopener" aria-label="Conversar no WhatsApp">{ICON["wa"]}</a>
+<script src="{BASE}assets/app.js" defer></script>
+</body>
+</html>'''
+
+
+def card(i):
+    f = finalidade(i)
+    capa = (f'<img src="{foto_url(i["fotos"][0])}" alt="{E(i.get("titulo"))}" loading="lazy" width="640" height="480">'
+            if i["fotos"] else '<span class="nofoto">Sem foto</span>')
+    spec = []
+    if num(i.get("quartos")):
+        spec.append(f'{int(num(i["quartos"]))} quarto{"s" if num(i["quartos"]) > 1 else ""}')
+    if num(i.get("vagas")):
+        spec.append(f'{int(num(i["vagas"]))} vaga{"s" if num(i["vagas"]) > 1 else ""}')
+    area = m2(i.get("areaUtil")) or m2(i.get("areaTotal"))
+    if area:
+        spec.append(area)
+    tag = "Venda e aluguel" if f["venda"] and f["aluguel"] else ("Aluguel" if f["aluguel"] else "Venda")
+    data = {
+        "p": " ".join(k for k, v in f.items() if v), "tipo": slug(i.get("tipo")),
+        "q": slug(" ".join(str(i.get(k) or "") for k in ("codigo", "titulo", "tipo", "bairro", "cidade"))),
+        "quartos": int(num(i.get("quartos")) or 0),
+        "valor": int(num(i.get("valorVenda")) or 0), "aluguel": int(num(i.get("valorAluguel")) or 0),
+    }
+    attrs = " ".join(f'data-{k}="{E(v)}"' for k, v in data.items())
+    return f'''<article class="card" {attrs}><a href="{BASE}imovel/{i["slug"]}/">
+  <div class="ph">{capa}<span class="tag">{tag}</span></div>
+  <div class="cb"><div class="loc">{E(i.get("tipo"))} · {E(i.get("bairro"))}{", " + E(i.get("cidade")) if i.get("cidade") else ""}</div>
+  <h3>{E(i.get("titulo"))}</h3>
+  <div class="price">{E(preco(i))}</div>
+  {f'<div class="spec">{" · ".join(E(s) for s in spec)}</div>' if spec else ""}
+  <div class="cod">Código {E(i["codigo"])}</div></div></a></article>'''
+
+
+def busca_form(tipos, compact=False):
+    opts = "".join(f'<option value="{slug(t)}">{E(t)}</option>' for t in tipos)
+    return f'''<form class="busca{' compact' if compact else ''}" action="{BASE}imoveis/" method="get" role="search">
+  <div class="seg" role="radiogroup" aria-label="Finalidade"><label><input type="radio" name="p" value="venda" checked><span>Comprar</span></label><label><input type="radio" name="p" value="aluguel"><span>Alugar</span></label></div>
+  <label class="fld"><span>Tipo</span><select name="tipo"><option value="">Todos os tipos</option>{opts}</select></label>
+  <label class="fld grow"><span>Bairro, cidade ou código</span><input name="q" placeholder="Ex.: Mercês, Centro, TC1AB2C"></label>
+  <button class="btn pri" type="submit">Buscar imóveis</button>
+</form>'''
+
+
+TIPOS_BASE = ["Apartamento", "Casa", "Casa em condomínio", "Terreno", "Lote em condomínio", "Sala comercial", "Loja", "Galpão", "Chácara", "Sítio", "Fazenda"]
+
+
+def page_home(imoveis):
+    tipos = sorted({i.get("tipo") for i in imoveis if i.get("tipo")} | set(TIPOS_BASE), key=lambda t: (t not in TIPOS_BASE, TIPOS_BASE.index(t) if t in TIPOS_BASE else 0, t))
+    dest = imoveis[:9]
+    grid = ("".join(card(i) for i in dest)) if dest else '<p class="empty">Os imóveis aprovados aparecem aqui assim que forem publicados.</p>'
+    c = CFG
+    body = f'''<section class="hero"><div class="wrap">
+  <h1>Encontre o imóvel certo em {E(c["cidade"])}</h1>
+  <p>Casas, apartamentos, terrenos e imóveis comerciais para comprar ou alugar, com atendimento de quem conhece a cidade.</p>
+  {busca_form(tipos)}
+</div></section>
+<section class="sec"><div class="wrap">
+  <div class="sh"><h2>Imóveis recentes</h2><a href="{BASE}imoveis/">Ver todos os imóveis</a></div>
+  <div class="grid">{grid}</div>
+</div></section>
+<section class="sec alt"><div class="wrap cta3">
+  <a class="cta" href="{BASE}anuncie/"><h3>Quer vender ou alugar?</h3><p>Cadastre seu imóvel e nossa equipe entra em contato.</p><span>Anunciar meu imóvel</span></a>
+  <a class="cta" href="{BASE}encomende/"><h3>Não achou o que procura?</h3><p>Conte o que você precisa e buscamos para você.</p><span>Encomendar imóvel</span></a>
+  <a class="cta" href="{BASE}financiamento/"><h3>Precisa de financiamento?</h3><p>Simule nos principais bancos.</p><span>Simular financiamento</span></a>
+</div></section>'''
+    return layout(f'{c["nome"]} | Imóveis em {c["cidade"]}', body, path="")
+
+
+def page_lista(imoveis):
+    tipos = sorted({i.get("tipo") for i in imoveis if i.get("tipo")})
+    grid = "".join(card(i) for i in imoveis)
+    topts = "".join(f'<option value="{slug(t)}">{E(t)}</option>' for t in tipos)
+    body = f'''<section class="sec"><div class="wrap">
+  <h1 class="pt">Imóveis</h1>
+  <form class="filtros" id="filtros" role="search" onsubmit="return false">
+    <div class="seg" role="radiogroup" aria-label="Finalidade"><label><input type="radio" name="p" value=""><span>Todos</span></label><label><input type="radio" name="p" value="venda"><span>Comprar</span></label><label><input type="radio" name="p" value="aluguel"><span>Alugar</span></label></div>
+    <label class="fld"><span>Tipo</span><select name="tipo"><option value="">Todos</option>{topts}</select></label>
+    <label class="fld grow"><span>Bairro, cidade ou código</span><input name="q" type="search"></label>
+    <label class="fld"><span>Quartos</span><select name="quartos"><option value="0">Qualquer</option><option value="1">1 ou mais</option><option value="2">2 ou mais</option><option value="3">3 ou mais</option><option value="4">4 ou mais</option></select></label>
+    <label class="fld"><span>Valor até</span><input name="max" inputmode="numeric" placeholder="R$"></label>
+  </form>
+  <p class="count" id="count" aria-live="polite">{len(imoveis)} imóve{"l" if len(imoveis) == 1 else "is"}</p>
+  <div class="grid" id="lista">{grid}</div>
+  <p class="empty" id="vazio" {"hidden" if imoveis else ""}>Nenhum imóvel encontrado com esses filtros. <a href="{BASE}encomende/">Encomende seu imóvel</a> e buscamos para você.</p>
+</div></section>'''
+    return layout(f'Imóveis à venda e para alugar em {CFG["cidade"]} | {CFG["nome"]}', body, path="imoveis/")
+
+
+def page_imovel(i):
+    c = CFG
+    fotos = i["fotos"]
+    gal = ""
+    if fotos:
+        thumbs = "".join(f'<button type="button" class="th" data-i="{k}" aria-label="Ver foto {k+1}"><img src="{foto_url(f)}" alt="" loading="lazy"></button>' for k, f in enumerate(fotos))
+        gal = f'''<div class="gal" data-n="{len(fotos)}">
+  <div class="main"><img id="gmain" src="{foto_url(fotos[0])}" alt="{E(i.get("titulo"))}, foto 1 de {len(fotos)}" width="1200" height="900">
+  {'<button type="button" class="nv prev" aria-label="Foto anterior">‹</button><button type="button" class="nv next" aria-label="Próxima foto">›</button>' if len(fotos) > 1 else ''}<span class="gc" id="gc">1 / {len(fotos)}</span></div>
+  {f'<div class="thumbs">{thumbs}</div>' if len(fotos) > 1 else ''}
+  <script type="application/json" id="gdata">{json.dumps([foto_url(f) for f in fotos])}</script>
+</div>'''
+    specs = [("Quartos", num(i.get("quartos")) and int(num(i["quartos"]))), ("Suítes", num(i.get("suites")) and int(num(i["suites"]))),
+             ("Banheiros", num(i.get("banheiros")) and int(num(i["banheiros"]))), ("Vagas", num(i.get("vagas")) and int(num(i["vagas"]))),
+             ("Área construída", m2(i.get("areaUtil"))), ("Área do terreno", m2(i.get("areaTotal"))), ("Andar", i.get("andar") and f'{i["andar"]}º')]
+    specs = [(k, v) for k, v in specs if v]
+    custos = [("Condomínio", money(i.get("condominio")) and money(i["condominio"]) + "/mês"), ("IPTU", money(i.get("iptu")) and money(i["iptu"]) + "/ano")]
+    custos = [(k, v) for k, v in custos if v]
+    car = [x.strip() for x in str(i.get("caracteristicas") or "").split(",") if x.strip()]
+    end = ", ".join(x for x in [i.get("rua") and (i["rua"] + (", " + i["numero"] if i.get("numero") else "")), i.get("bairro"), i.get("cidade")] if x)
+    msg = f'Olá! Tenho interesse no imóvel {i["codigo"]} ({i.get("titulo")}) que vi no site.'
+    desc_txt = str(i.get("descricao") or "")
+    body = f'''<section class="sec im"><div class="wrap">
+  <nav class="crumb" aria-label="Você está em"><a href="{BASE}">Início</a> › <a href="{BASE}imoveis/">Imóveis</a> › {E(i["codigo"])}</nav>
+  <div class="imh"><div><div class="loc">{E(i.get("tipo"))} · {E(i.get("pretensao"))}</div><h1>{E(i.get("titulo"))}</h1><p class="addr">{E(end)}</p></div>
+    <div class="pbox"><div class="price big">{E(preco(i))}</div>{'<div class="neg">Aceita negociação</div>' if i.get("aceitaNegociacao") else ''}<div class="cod">Código {E(i["codigo"])}</div></div></div>
+  {gal}
+  <div class="imb">
+    <div>
+      {f'<ul class="specs">{"".join(f"<li><span>{E(k)}</span><b>{E(v)}</b></li>" for k, v in specs)}</ul>' if specs else ''}
+      {f'<h2>Sobre o imóvel</h2><div class="desc">{E(desc_txt)}</div>' if desc_txt else ''}
+      {f'<h2>Características</h2><ul class="feat">{"".join(f"<li>{E(x)}</li>" for x in car)}</ul>' if car else ''}
+      {f'<h2>Custos mensais e anuais</h2><ul class="specs">{"".join(f"<li><span>{E(k)}</span><b>{E(v)}</b></li>" for k, v in custos)}</ul>' if custos else ''}
+    </div>
+    <aside class="contact"><h2>Gostou deste imóvel?</h2><p>Fale com a Telecasa e agende uma visita.</p>
+      <a class="btn pri wide" href="{E(wa(msg))}" target="_blank" rel="noopener">{ICON["wa"]} Chamar no WhatsApp</a>
+      <a class="btn wide" href="tel:+{E(c["fone_fixo_digits"])}">{ICON["tel"]} Ligar {E(c["fone_fixo"])}</a>
+      {f'<p class="small">Corretor responsável: {E(i.get("corretor"))}</p>' if i.get("corretor") else ''}
+      <p class="small">CRECI {E(c["creci"])}</p></aside>
+  </div>
+</div></section>'''
+    d = (desc_txt[:150] + "…") if len(desc_txt) > 150 else desc_txt
+    return layout(f'{i.get("titulo")} | {i["codigo"]} | {c["nome"]}', body, desc=d or f'{i.get("tipo")} em {i.get("bairro")}, {i.get("cidade")}. {preco(i)}.',
+                  path=f'imovel/{i["slug"]}/', og_img=foto_url(fotos[0]) if fotos else "")
+
+
+def form_page(title, intro, campos, assunto, path):
+    rows = []
+    for name, label, kind, extra in campos:
+        req = " required" if extra.get("req") else ""
+        lab = E(label) + (" *" if req else "")
+        if kind == "textarea":
+            rows.append(f'<label class="fld full"><span>{lab}</span><textarea name="{name}" rows="4"{req}></textarea></label>')
+        elif kind == "select":
+            rows.append(f'<label class="fld"><span>{lab}</span><select name="{name}"{req}>{"".join(f"<option>{E(o)}</option>" for o in extra["opts"])}</select></label>')
+        else:
+            rows.append(f'<label class="fld"><span>{lab}</span><input name="{name}" type="{kind}"{req}{" inputmode=numeric" if extra.get("num") else ""}></label>')
+    body = f'''<section class="sec"><div class="wrap narrow">
+  <h1 class="pt">{E(title)}</h1><p class="lead">{E(intro)}</p>
+  <form class="wform" data-assunto="{E(assunto)}" data-wa="{E(CFG["whatsapp"])}">{"".join(rows)}
+    <button class="btn pri" type="submit">{ICON["wa"]} Enviar pelo WhatsApp</button>
+    <p class="small">Ao enviar, abrimos o WhatsApp com a mensagem pronta para você confirmar.</p>
+  </form>
+</div></section>'''
+    return layout(f'{title} | {CFG["nome"]}', body, path=path)
+
+
+TIPOS_FORM = TIPOS_BASE + ["Outro"]
+
+
+def static_pages():
+    c = CFG
+    pages = {}
+    pages["anuncie"] = form_page("Anuncie seu imóvel", "Quer vender ou alugar? Mande os dados do imóvel e um corretor da Telecasa entra em contato para avaliar e fotografar.", [
+        ("Nome", "Seu nome", "text", {"req": 1}), ("Telefone", "Telefone", "tel", {"req": 1}), ("E-mail", "E-mail", "email", {}),
+        ("Finalidade", "Finalidade", "select", {"opts": ["Vender", "Alugar", "Vender ou alugar"]}), ("Tipo", "Tipo de imóvel", "select", {"opts": TIPOS_FORM}),
+        ("Endereço", "Endereço com CEP", "text", {"req": 1}), ("Área construída", "Área construída (m²)", "text", {"num": 1}),
+        ("Valor pretendido", "Valor pretendido", "text", {}), ("Descrição", "Conte sobre o imóvel", "textarea", {})], "Quero anunciar meu imóvel", "anuncie/")
+    pages["encomende"] = form_page("Encomende seu imóvel", "Não encontrou o imóvel ideal? Diga o que você procura e a Telecasa busca para você.", [
+        ("Nome", "Seu nome", "text", {"req": 1}), ("Telefone", "Telefone", "tel", {"req": 1}),
+        ("Finalidade", "Quero", "select", {"opts": ["Comprar", "Alugar"]}), ("Tipo", "Tipo de imóvel", "select", {"opts": TIPOS_FORM}),
+        ("Bairros", "Bairros de interesse", "text", {}), ("Quartos", "Quartos", "text", {"num": 1}), ("Valor máximo", "Valor máximo", "text", {}),
+        ("Detalhes", "O que é importante para você", "textarea", {})], "Encomenda de imóvel", "encomende/")
+    pages["contato"] = form_page("Fale conosco", f'{c["endereco"]} · {c["horario"]}. Telefone {c["fone_fixo"]} e WhatsApp {c["fone_whats"]}.', [
+        ("Nome", "Seu nome", "text", {"req": 1}), ("Telefone", "Telefone", "tel", {"req": 1}), ("Mensagem", "Mensagem", "textarea", {"req": 1})], "Contato pelo site", "contato/")
+    pages["contato"] = pages["contato"].replace('</form>', '</form><div class="map"><iframe title="Mapa da Telecasa" loading="lazy" src="https://www.google.com/maps?q=' + E(c["endereco"]).replace(" ", "+") + '&output=embed"></iframe></div>', 1)
+    bancos = "".join(f'<li><a class="btn" href="{E(u)}" target="_blank" rel="noopener">{E(n)}</a></li>' for n, u in c["bancos"])
+    pages["financiamento"] = layout(f'Financiamento e bancos | {c["nome"]}', f'''<section class="sec"><div class="wrap narrow">
+  <h1 class="pt">Financiamento e bancos</h1><p class="lead">Escolha um banco e faça a sua simulação. Se precisar de ajuda, nossa equipe acompanha todo o processo.</p>
+  <ul class="bancos">{bancos}</ul>
+  <p><a class="btn pri" href="{E(wa("Olá! Quero ajuda com financiamento imobiliário."))}" target="_blank" rel="noopener">{ICON["wa"]} Falar sobre financiamento</a></p>
+</div></section>''', path="financiamento/")
+    pages["quem-somos"] = layout(f'Quem somos | {c["nome"]}', f'''<section class="sec"><div class="wrap narrow">
+  <h1 class="pt">Quem somos</h1>{"".join(f"<p class=lead>{E(p)}</p>" if k == 0 else f"<p>{E(p)}</p>" for k, p in enumerate(c["quem_somos"]))}
+  <p><a class="btn pri" href="{BASE}contato/">Fale com a gente</a></p>
+</div></section>''', path="quem-somos/")
+    pages["privacidade"] = layout(f'Política de privacidade | {c["nome"]}', f'''<section class="sec"><div class="wrap narrow">
+  <h1 class="pt">Política de privacidade</h1>
+  <p>Este site não usa cadastro, não guarda dados pessoais e não usa cookies de rastreamento. Os formulários apenas abrem o WhatsApp com a mensagem que você escreveu; nada é enviado antes de você confirmar no aplicativo.</p>
+  <p>Os dados que você nos enviar pelo WhatsApp ou telefone são usados só para o atendimento sobre imóveis, conforme a Lei Geral de Proteção de Dados (Lei 13.709/2018). Para pedir a exclusão dos seus dados, fale com a gente pelos contatos do rodapé.</p>
+</div></section>''', path="privacidade/")
+    return pages
+
+
+def write(rel, content):
+    p = os.path.join(OUT, rel)
+    os.makedirs(os.path.dirname(p), exist_ok=True)
+    with open(p, "w", encoding="utf-8") as fh:
+        fh.write(content)
+
+
+def main():
+    if os.path.exists(OUT):
+        shutil.rmtree(OUT)
+    os.makedirs(OUT)
+    shutil.copytree(os.path.join(ROOT, "assets"), os.path.join(OUT, "assets"))
+    imoveis = load_imoveis()
+    write_fotos(imoveis)
+    write("index.html", page_home(imoveis))
+    write("imoveis/index.html", page_lista(imoveis))
+    for i in imoveis:
+        write(f'imovel/{i["slug"]}/index.html', page_imovel(i))
+    for name, content in static_pages().items():
+        write(f"{name}/index.html", content)
+    write("404.html", layout(f'Página não encontrada | {CFG["nome"]}', f'<section class="sec"><div class="wrap narrow"><h1 class="pt">Página não encontrada</h1><p class="lead">Este imóvel pode ter sido vendido ou alugado.</p><p><a class="btn pri" href="{BASE}imoveis/">Ver imóveis disponíveis</a></p></div></section>'))
+    if DOMAIN:
+        write("CNAME", DOMAIN + "\n")
+    write(".nojekyll", "")
+    urls = ["", "imoveis/", "anuncie/", "encomende/", "financiamento/", "quem-somos/", "contato/"] + [f'imovel/{i["slug"]}/' for i in imoveis]
+    if SITE_URL:
+        today = datetime.now(timezone.utc).date().isoformat()
+        write("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+              + "".join(f"<url><loc>{E(SITE_URL + BASE + u)}</loc><lastmod>{today}</lastmod></url>" for u in urls) + "</urlset>\n")
+        write("robots.txt", f"User-agent: *\nAllow: /\nSitemap: {SITE_URL}{BASE}sitemap.xml\n")
+    print(f"site gerado em _site/ com {len(imoveis)} imóveis (base {BASE})")
+
+
+if __name__ == "__main__":
+    main()
