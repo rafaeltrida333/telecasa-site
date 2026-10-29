@@ -449,7 +449,7 @@ def page_imovel(i):
     <aside class="contact"><h2>Gostou deste imóvel?</h2><p>Fale com a Telecasa e agende uma visita.</p>
       <a class="btn pri wide" href="{E(wa(msg))}" target="_blank" rel="noopener">{ICON["wa"]} Chamar no WhatsApp</a>
       <a class="btn wide" href="tel:+{E(c["fone_fixo_digits"])}">{ICON["tel"]} Ligar {E(c["fone_fixo"])}</a>
-      {f'<p class="small">Corretor responsável: {E(i.get("corretor"))}</p>' if i.get("corretor") else ''}
+      {f'<p class="small">Corretor responsável: {E(i.get("corretor"))}</p>' if i.get("corretor") not in (None, "", "Telecasa") else ''}
       <p class="small">CRECI {E(c["creci"])}</p></aside>
   </div>
 </div></section>'''
