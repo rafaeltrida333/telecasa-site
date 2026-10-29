@@ -177,6 +177,8 @@ def logo_img(key="logo_img", cls="logo-svg"):
     u = CFG.get(key)
     if not u:
         return logo_svg(cls)
+    if not u.startswith("https://"):
+        u = BASE + u
     return (f'<img class="{cls}" src="{E(u)}" alt="Telecasa Negócios Imobiliários" onerror="this.hidden=true;this.nextElementSibling.removeAttribute(&quot;hidden&quot;)">'
             + logo_svg(cls).replace("<svg ", "<svg hidden ", 1))
 
@@ -212,7 +214,7 @@ def layout(title, body, desc="", path="", og_img="", extra_head=""):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{E(title)}</title>
 {head_meta}
-<link rel="icon" href="{BASE}assets/icon.svg" type="image/svg+xml">
+<link rel="icon" href="{BASE}assets/icon.png" type="image/png"><link rel="apple-touch-icon" href="{BASE}assets/icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{BASE}assets/style.css">
