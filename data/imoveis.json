@@ -1,26 +1,7 @@
 {
- "gerado": "2026-10-29T18:31:36.686Z",
+ "gerado": "2026-10-29T18:31:41.288Z",
  "substituiKenlo": true,
  "imoveis": [
-  {
-   "id": "crm-v6lo4fbuxfixbqb",
-   "codigo": "CA0158",
-   "titulo": "TESTE DO CRM - será removido",
-   "pretensao": "Venda",
-   "tipo": "Casa",
-   "valorVenda": 1,
-   "areaUtil": 100,
-   "descricao": "Imóvel de teste do CRM, será removido em seguida.",
-   "bairro": "TESTE CRM - apagar",
-   "cidade": "Uberaba",
-   "aceitaNegociacao": false,
-   "destaque": false,
-   "fotos": [
-    "v6lo4fbuxfixbqb_teste_6j6xv2x9sm"
-   ],
-   "corretor": "Telecasa",
-   "publicadoEm": "2026-10-29T18:31:34"
-  },
   {
    "id": "kenlo-86652452",
    "codigo": "AP0104",
