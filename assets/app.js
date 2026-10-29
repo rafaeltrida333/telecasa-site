@@ -11,6 +11,9 @@
   if (f) {
     const cards = [...document.querySelectorAll("#lista .card")];
     const qs = new URLSearchParams(location.search);
+    // Páginas como /imoveis/a-venda/casa/ já vêm com filtros definidos
+    let pre = {}; try { pre = JSON.parse(f.dataset.preset || "{}") } catch (e) {}
+    for (const k in pre) if (!qs.has(k)) qs.set(k, pre[k]);
     for (const k of ["tipo", "q", "quartos", "max"]) if (qs.get(k) && f.elements[k]) f.elements[k].value = qs.get(k);
     const p = qs.get("p") || "";
     for (const r of f.querySelectorAll("[name=p]")) r.checked = r.value === p;
@@ -32,6 +35,16 @@
     };
     f.addEventListener("input", apply); f.addEventListener("change", apply); apply();
   }
+
+  // Busca por código
+  for (const b of document.querySelectorAll("[data-cod]")) b.addEventListener("click", () => {
+    const c = prompt("Digite o código do imóvel");
+    if (c && c.trim()) location.href = b.closest("form").action + "?q=" + encodeURIComponent(c.trim());
+  });
+
+  // Carrossel de bairros
+  const car = $("#bairros");
+  for (const b of document.querySelectorAll("[data-car]")) b.addEventListener("click", () => car.scrollBy({ left: +b.dataset.car * car.clientWidth * .8, behavior: "smooth" }));
 
   // Galeria da página do imóvel
   const g = $(".gal");

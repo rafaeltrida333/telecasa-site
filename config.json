@@ -17,10 +17,70 @@
     "Contamos com uma equipe de especialistas: arquitetos, engenheiros, advogados, administradores, corretores, consultores de vendas e prestadores de serviço."
   ],
   "bancos": [
-    ["Caixa", "http://www8.caixa.gov.br/siopiinternet/simulaOperacaoInternet.do?method=inicializarCasoUso"],
-    ["Banco do Brasil", "https://www42.bb.com.br/portalbb/imobiliario/creditoimobiliario/simular,802,2250,2250.bbx"],
-    ["Itaú", "https://credito-imobiliario.itau.com.br/"],
-    ["Bradesco", "https://banco.bradesco/html/classic/produtos-servicos/emprestimo-e-financiamento/encontre-seu-credito/simuladores-imoveis.shtm"],
-    ["Santander", "https://www.webcasas.com.br/webcasas/?headerandfooter/#/dados-pessoais"]
+    [
+      "Caixa",
+      "http://www8.caixa.gov.br/siopiinternet/simulaOperacaoInternet.do?method=inicializarCasoUso"
+    ],
+    [
+      "Banco do Brasil",
+      "https://www42.bb.com.br/portalbb/imobiliario/creditoimobiliario/simular,802,2250,2250.bbx"
+    ],
+    [
+      "Itaú",
+      "https://credito-imobiliario.itau.com.br/"
+    ],
+    [
+      "Bradesco",
+      "https://banco.bradesco/html/classic/produtos-servicos/emprestimo-e-financiamento/encontre-seu-credito/simuladores-imoveis.shtm"
+    ],
+    [
+      "Santander",
+      "https://www.webcasas.com.br/webcasas/?headerandfooter/#/dados-pessoais"
+    ]
+  ],
+  "slogan": "A sua melhor imobiliária em Uberaba",
+  "hero_titulo": "A Telecasa é a imobiliária que mais cresce em Uberaba",
+  "hero_sub": "Confiança, Transparência e Credibilidade são os pilares do nosso atendimento!",
+  "bairros": [
+    "Jardim do Lago",
+    "Lourdes",
+    "Santa Maria",
+    "Conjunto Manoel Mendes",
+    "Recreio dos Bandeirantes",
+    "Bom Retiro",
+    "Centro",
+    "Jardim Espanha",
+    "Jardim Libânio",
+    "Jardim Maracanã",
+    "Parque das Américas",
+    "Vila Arquelau",
+    "Vila Celeste",
+    "Alfredo Freire III",
+    "Amoroso Costa",
+    "Boa Vista",
+    "Chácaras Vila Real",
+    "Conjunto Frei Eugênio",
+    "Conjunto Margarida Rosa de Azevedo",
+    "Conjunto Pontal",
+    "Conjunto Umuarama",
+    "Cyrela Landscape",
+    "Damha Residencial Uberaba II",
+    "Damha Residencial Uberaba III",
+    "Fabrício",
+    "Ilha Bella",
+    "Jardim Belo Horizonte",
+    "Jardim Itália",
+    "Jardim São Bento",
+    "Nossa Senhora da Abadia",
+    "Olinda",
+    "Pacaembu II",
+    "Parque São Geraldo",
+    "Parque do Mirante",
+    "Parque dos Buritis",
+    "Quinta Boa Esperança",
+    "Residencial Morumbi",
+    "São Benedito",
+    "São Sebastião",
+    "Vila Maria Helena"
   ]
 }
