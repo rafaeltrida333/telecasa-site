@@ -144,12 +144,45 @@ ICON = {
 }
 
 
+ICON.update({
+    "home": '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M12 3 2 12h3v8h5v-5h4v5h5v-8h3z"/></svg>',
+    "mega": '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M3 10v4h3l5 4V6L6 10H3Zm10-3v10c2.5-.6 4-2.6 4-5s-1.5-4.4-4-5Zm6 1-1 1.5c.6.7 1 1.6 1 2.5s-.4 1.8-1 2.5l1 1.5c1-1 2-2.4 2-4s-1-3-2-4Z"/></svg>',
+    "users": '<svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm7 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM2 19c0-3 3-5 7-5s7 2 7 5v1H2v-1Zm15.5-4.8c2.6.4 4.5 2 4.5 4.3v1.5h-4.5V19c0-1.9-.7-3.6-2-4.8Z"/></svg>',
+    "fb": '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M14 8V6.5c0-.7.2-1.2 1.2-1.2H17V2.2A23 23 0 0 0 14.6 2C12.2 2 10.6 3.5 10.6 6.2V8H8v3.4h2.6V22H14V11.4h2.7L17 8h-3Z"/></svg>',
+    "ig": '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>',
+    "lupa": '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m20 20-4.5-4.5"/></svg>',
+    "filtro": '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h18M6 12h12M10 18h4"/></svg>',
+    "seta": '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 12h17m-6-6 6 6-6 6"/></svg>',
+    "enc": '<svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M7 3h9l3 3v12H7z"/><path d="M5 6v15h11M10 8h6M10 11h6M10 14h4"/></svg>',
+    "din": '<svg viewBox="0 0 24 24" width="34" height="34" aria-hidden="true"><path fill="currentColor" d="M13 2v2.1c2.3.3 4 1.8 4.3 4h-2.8c-.2-1-1.1-1.7-2.5-1.7-1.6 0-2.5.7-2.5 1.7 0 .9.7 1.4 2.9 2l1.1.3c3 .8 4.4 2.1 4.4 4.4 0 2.4-1.8 4-4.9 4.3V22h-2v-2.9c-2.7-.3-4.6-1.9-4.8-4.4h2.8c.2 1.2 1.3 2 3 2s2.8-.8 2.8-1.9c0-.9-.7-1.4-2.6-1.9l-1.3-.3C7.9 11.9 6.7 10.6 6.7 8.6c0-2.3 1.8-4 4.3-4.4V2h2Z"/></svg>',
+    "placa": '<svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 2v20M5 5h15M9 5v3M17 5v3M8 8h12v7H8z"/></svg>',
+})
+
 MENU = [("cadastre-seu-imovel/", "Cadastre seu imóvel"), ("quem-somos/", "Quem somos"), ("corretores/", "Corretores"),
         ("encomende-seu-imovel/", "Encomende seu imóvel"), ("financiamento-e-bancos/", "Financiamento e bancos"), ("fale-conosco/", "Fale conosco")]
 
 
+def logo_svg(cls="logo-svg"):
+    # Desenho do logo da Telecasa: telhado dourado e chaminé cinza, nome sem a barra do A
+    return f'''<svg class="{cls}" viewBox="0 0 220 120" role="img" aria-label="Telecasa Negócios Imobiliários">
+<path d="M58 52 92 18l40 40" fill="none" stroke="#b19e6d" stroke-width="11" stroke-linejoin="miter"/>
+<path d="M96 11h19l40 40-9 9-37-37h-13z" fill="#3f3f3f"/>
+<text x="110" y="92" text-anchor="middle" font-family="Red Hat Display,Manrope,sans-serif" font-size="34" font-weight="400" letter-spacing="1.5" fill="#3f3f3f">TELEC&#923;S&#923;</text>
+<text x="110" y="111" text-anchor="middle" font-family="Red Hat Display,Manrope,sans-serif" font-size="11.5" letter-spacing=".8" fill="#b19e6d">Negócios Imobiliários</text>
+</svg>'''
+
+
+def logo_img(key="logo_img", cls="logo-svg"):
+    """Logo original (config logo_img); se a imagem não carregar, mostra o desenho em SVG."""
+    u = CFG.get(key)
+    if not u:
+        return logo_svg(cls)
+    return (f'<img class="{cls}" src="{E(u)}" alt="Telecasa Negócios Imobiliários" onerror="this.hidden=true;this.nextElementSibling.removeAttribute(&quot;hidden&quot;)">'
+            + logo_svg(cls).replace("<svg ", "<svg hidden ", 1))
+
+
 def logo_html():
-    return f'<a class="logo" href="{BASE}" aria-label="{E(CFG["nome"])}, página inicial"><span class="mark">T</span><span><b>Telecasa</b><small>Imobiliária</small></span></a>'
+    return f'<a class="logo" href="{BASE}" aria-label="{E(CFG["nome"])}, página inicial">{logo_img()}</a>'
 
 
 def links_html(links):
@@ -171,8 +204,7 @@ def layout(title, body, desc="", path="", og_img="", extra_head=""):
     if canon:
         head_meta += f'<link rel="canonical" href="{E(canon)}">'
     wa_link = f'https://wa.me/{E(c["whatsapp"])}'
-    soc = f'<a href="{E(c["facebook"])}" target="_blank" rel="noopener">Facebook</a><a href="{E(c["instagram"])}" target="_blank" rel="noopener">Instagram</a>'
-    redes = fcol("Redes sociais", []).replace("<ul></ul>", f'<ul><li><a href="{E(c["facebook"])}" target="_blank" rel="noopener">Facebook</a></li><li><a href="{E(c["instagram"])}" target="_blank" rel="noopener">Instagram</a></li></ul>')
+    redes = f'<a href="{E(c["facebook"])}" target="_blank" rel="noopener">{ICON["fb"]} Facebook</a><a href="{E(c["instagram"])}" target="_blank" rel="noopener">{ICON["ig"]} Instagram</a>'
     return f'''<!doctype html>
 <html lang="pt-BR">
 <head>
@@ -182,50 +214,45 @@ def layout(title, body, desc="", path="", og_img="", extra_head=""):
 {head_meta}
 <link rel="icon" href="{BASE}assets/icon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{BASE}assets/style.css">
 {extra_head}
 </head>
 <body>
 <a class="skip" href="#conteudo">Pular para o conteúdo</a>
-<div class="topbar"><div class="wrap">
-  <nav class="tnav" aria-label="Institucional">{links_html(MENU)}</nav>
-  <span class="tsoc"><a href="{wa_link}" target="_blank" rel="noopener">{E(c["fone_whats"])}</a>{soc}</span>
-</div></div>
-<header class="hd"><div class="wrap">
-  <div class="brand">{logo_html()}<span class="slogan">{E(c["slogan"])}</span></div>
-  <div class="hcont"><a class="hwa" href="{wa_link}" target="_blank" rel="noopener">{ICON["wa"]}<span><small>Fale Conosco</small>{E(c["fone_whats"])}</span></a>
-    <a class="htel" href="tel:+{E(c["fone_fixo_digits"])}">{ICON["tel"]}<span><small>Telefone</small>{E(c["fone_fixo"])}</span></a></div>
+<header class="hd"><div class="hwrap">
+  {logo_html()}
+  <nav class="hnav" aria-label="Atalhos">
+    <a class="hph" href="{wa_link}" target="_blank" rel="noopener">{ICON["tel"]}<span><b>{ICON["wa"]} {E(c["fone_whats"])}</b><small>Fale Conosco</small></span></a>
+    <details class="dd"><summary aria-label="Outros telefones"></summary><div><a href="{wa_link}" target="_blank" rel="noopener">{ICON["wa"]} {E(c["fone_whats"])}</a><a href="tel:+{E(c["fone_fixo_digits"])}">{ICON["tel"]} {E(c["fone_fixo"])}</a></div></details>
+    <a href="{BASE}cadastre-seu-imovel/">{ICON["home"]}Cadastre seu imóvel</a>
+    <a href="{BASE}quem-somos/">{ICON["mega"]}Quem somos</a>
+    <details class="dd"><summary>{ICON["users"]}Redes sociais</summary><div>{redes}</div></details>
+  </nav>
   <button class="menu" aria-expanded="false" aria-controls="nav" aria-label="Abrir menu"><span></span></button>
-  <nav id="nav" aria-label="Principal">{links_html([("imoveis/a-venda/", "Comprar"), ("imoveis/para-alugar/", "Alugar")] + MENU)}</nav>
+  <nav id="nav" aria-label="Principal">{links_html([("", "Início"), ("imoveis/a-venda/", "Comprar"), ("imoveis/para-alugar/", "Alugar")] + MENU)}
+    <a href="{wa_link}" target="_blank" rel="noopener">WhatsApp {E(c["fone_whats"])}</a><a href="tel:+{E(c["fone_fixo_digits"])}">Telefone {E(c["fone_fixo"])}</a></nav>
 </div></header>
 <main id="conteudo">
 {body}
 </main>
-<footer class="ft"><div class="wrap">
-  <div class="fcols">
+<footer class="ft"><div class="wrap fcols">
     {fcol("Institucional", [("quem-somos/", "Quem somos"), ("corretores/", "Corretores"), ("politica-de-privacidade/", "Política de privacidade")])}
     {fcol("Imóveis", [("cadastre-seu-imovel/", "Cadastre seu imóvel"), ("encomende-seu-imovel/", "Encomende seu imóvel")])}
     {fcol("Serviços", [("financiamento-e-bancos/", "Financiamento e bancos")])}
     {fcol("Contato", [("fale-conosco/", "Fale conosco")])}
-    {redes}
-  </div>
-  <div class="finfo">
-    <div>{logo_html()}<p>CRECI: {E(c["creci"])}</p></div>
-    <div><p>{E(c["endereco"])}</p><p><a href="{wa_link}" target="_blank" rel="noopener">{E(c["fone_whats"])}</a> · <a href="tel:+{E(c["fone_fixo_digits"])}">{E(c["fone_fixo"])}</a></p></div>
-    <div><p><b>Horário de funcionamento</b><br>{E(c["horario"])}</p><p>Para mais informações, entre em contato conosco ou faça-nos uma visita.</p></div>
-  </div>
-  <p class="copy">© {datetime.now().year} {E(c["nome"])} · CRECI: {E(c["creci"])}</p>
 </div></footer>
+<div class="fbar"><div class="wrap"><span>© {datetime.now().year} {E(c["nome"])} · CRECI: {E(c["creci"])}</span>
+  <span class="soc"><a href="{E(c["facebook"])}" target="_blank" rel="noopener" aria-label="Facebook">{ICON["fb"]}</a><a href="{E(c["instagram"])}" target="_blank" rel="noopener" aria-label="Instagram">{ICON["ig"]}</a></span></div></div>
 <a class="wa-float" href="{wa_link}" target="_blank" rel="noopener" aria-label="Contato WhatsApp">{ICON["wa"]}</a>
 <script src="{BASE}assets/app.js" defer></script>
 </body>
 </html>'''
 
 
-def card(i):
+def card(i, mini=False):
     f = finalidade(i)
-    capa = (f'<img src="{foto_url(i["fotos"][0])}" alt="{E(i.get("titulo"))}" loading="lazy" width="640" height="480">'
+    capa = (f'<img src="{foto_url(i["fotos"][0])}" alt="{E(i.get("titulo"))}" loading="lazy" width="640" height="420">'
             if i["fotos"] else '<span class="nofoto">Sem foto</span>')
     spec = []
     if num(i.get("quartos")):
@@ -243,24 +270,27 @@ def card(i):
         "valor": int(num(i.get("valorVenda")) or 0), "aluguel": int(num(i.get("valorAluguel")) or 0),
     }
     attrs = " ".join(f'data-{k}="{E(v)}"' for k, v in data.items())
-    return f'''<article class="card" {attrs}><a href="{BASE}imovel/{i["slug"]}/">
-  <div class="ph">{capa}<span class="tag">{tag}</span></div>
-  <div class="cb"><div class="loc">{E(i.get("tipo"))} · {E(i.get("bairro"))}{", " + E(i.get("cidade")) if i.get("cidade") else ""}</div>
-  <h3>{E(i.get("titulo"))}</h3>
+    loc = " - ".join(x for x in [i.get("bairro"), i.get("cidade") or "Uberaba", "MG"] if x)
+    extra = "" if mini else f'''<div class="ct">{E(i.get("tipo"))} · {E(tag)}</div>
+  {f'<div class="spec">{" · ".join(E(s) for s in spec)}</div>' if spec else ""}'''
+    return f'''<article class="card{" mini" if mini else ""}" {attrs}><a href="{BASE}imovel/{i["slug"]}/">
+  <div class="ph">{capa}</div>
+  <div class="cb"><div class="loc">{E(loc)}</div>{extra}
   <div class="price">{E(preco(i))}</div>
-  {f'<div class="spec">{" · ".join(E(s) for s in spec)}</div>' if spec else ""}
-  <div class="cod">Código {E(i["codigo"])}</div></div></a></article>'''
+  {"" if mini else f'<div class="cod">Código {E(i["codigo"])}</div>'}</div></a></article>'''
+
 
 
 def busca_form(tipos):
     opts = "".join(f'<option value="{slug(t)}">{E(t)}</option>' for t in tipos)
     return f'''<form class="busca" action="{BASE}imoveis/" method="get" role="search">
-  <label class="fld"><span>Buscar por pretensão</span><select name="p"><option value="venda">Comprar</option><option value="aluguel">Alugar</option></select></label>
-  <label class="fld"><span>Buscar por tipo</span><select name="tipo"><option value="">Tipo imóvel</option>{opts}</select></label>
-  <label class="fld grow"><span>Onde</span><input name="q" placeholder="Digite condomínio, região, bairro ou cidade"></label>
+  <label class="bf sel"><small>Pretensão</small><select name="p" aria-label="Pretensão"><option value="venda">Comprar</option><option value="aluguel">Alugar</option></select></label>
+  <label class="bf sel"><select name="tipo" aria-label="Tipo de imóvel"><option value="">Tipo imóvel</option>{opts}</select></label>
+  <label class="bf q">{ICON["lupa"]}<input name="q" aria-label="Onde" placeholder="Digite condomínio, região, bairro ou cidade"></label>
+  <a class="pill" href="{BASE}imoveis/">Mais filtros {ICON["filtro"]}</a>
   <button class="btn pri" type="submit">Encontrar imóvel</button>
-  <div class="bxtra"><a href="{BASE}imoveis/">Mais filtros</a><button type="button" class="lnk" data-cod>Busca por código</button><a href="https://wa.me/{E(CFG["whatsapp"])}" target="_blank" rel="noopener">Contato WhatsApp</a></div>
-</form>'''
+</form>
+<button type="button" class="codb" data-cod>Busca por código</button>'''
 
 
 TIPOS_BASE = ["Apartamento", "Apartamento duplex", "Casa", "Casa em condomínio", "Terreno", "Lote em condomínio", "Área", "Sala comercial", "Loja", "Galpão", "Chácara", "Sítio", "Fazenda"]
@@ -271,40 +301,63 @@ CATS = [("para-alugar", "apartamento", "Apartamentos para alugar"), ("a-venda", 
 PRET = {"a-venda": ("venda", "à venda"), "para-alugar": ("aluguel", "para alugar")}
 
 
+def foto_de(imoveis, codigo, k=0):
+    """Foto usada de fundo na capa e na faixa de serviços (config hero_img/faixa_img, ou a foto de um imóvel)."""
+    for i in imoveis:
+        if i["codigo"] == codigo and len(i["fotos"]) > k:
+            return foto_url(i["fotos"][k])
+    return foto_url(imoveis[0]["fotos"][0]) if imoveis and imoveis[0]["fotos"] else ""
+
+
 def page_home(imoveis):
-    tipos = sorted({i.get("tipo") for i in imoveis if i.get("tipo")} | set(TIPOS_BASE), key=lambda t: (t not in TIPOS_BASE, TIPOS_BASE.index(t) if t in TIPOS_BASE else 0, t))
-    dest = imoveis[:9]
-    grid = ("".join(card(i) for i in dest)) if dest else '<p class="empty">Os imóveis aprovados aparecem aqui assim que forem publicados.</p>'
     c = CFG
+    tipos = sorted({i.get("tipo") for i in imoveis if i.get("tipo")} | set(TIPOS_BASE), key=lambda t: (t not in TIPOS_BASE, TIPOS_BASE.index(t) if t in TIPOS_BASE else 0, t))
+    venda = [i for i in imoveis if finalidade(i)["venda"]][:8]
+    alug = [i for i in imoveis if finalidade(i)["aluguel"]][:6]
+    vazio = '<p class="empty">Os imóveis aprovados aparecem aqui assim que forem publicados.</p>'
     cats = "".join(f'<a href="{BASE}imoveis/{p}/{t}/">{E(n)}</a>' for p, t, n in CATS)
-    bairros = "".join(f'<a href="{BASE}imoveis/uberaba/{slug(b)}/">{E(b)}</a>' for b in c["bairros"])
-    body = f'''<section class="hero"><div class="wrap">
+    bairros = "".join(f'<a href="{BASE}imoveis/uberaba/{slug(b)}/" data-pg="{k // 16}">{E(b)} - Uberaba</a>' for k, b in enumerate(c["bairros"]))
+    # Fundo original do site; a foto de um imóvel fica por baixo caso ele não carregue
+    bg = lambda *us: ",".join(f"url('{E(u)}')" for u in us if u)
+    hero = bg(c.get("hero_img"), foto_de(imoveis, "AD0001"))
+    faixa = bg(c.get("faixa_img"), foto_de(imoveis, "CA0126", 1))
+    end = c["endereco"].split(", ")
+    body = f'''<section class="hero" style="background-image:{hero}"><div class="hin">
   <h1>{E(c["hero_titulo"])}</h1>
   <p>{E(c["hero_sub"])}</p>
   {busca_form(tipos)}
 </div></section>
-<section class="sec"><div class="wrap cta3">
-  <a class="cta" href="{BASE}encomende-seu-imovel/"><h3>Imóvel sob encomenda</h3><p>Descreva o imóvel que você procura e nós avisaremos quando encontrarmos.</p><span>Encomende seu imóvel →</span></a>
-  <a class="cta" href="{BASE}financiamento-e-bancos/"><h3>Financiamento</h3><p>As melhores ofertas de crédito para você financiar seu imóvel.</p><span>Faça uma simulação →</span></a>
-  <a class="cta" href="{BASE}cadastre-seu-imovel/"><h3>Cadastre seu imóvel</h3><p>Anuncie conosco! Nós encontraremos o melhor negócio para você.</p><span>Cadastre seu imóvel →</span></a>
-</div></section>
-<section class="sec alt"><div class="wrap">
-  <div class="sh"><h2>Imóveis em destaque</h2><a href="{BASE}imoveis/">Ver todos os imóveis</a></div>
-  <div class="grid">{grid}</div>
+<section class="sec"><div class="wrap">
+  <h2 class="st">Sua Próxima História em Nossos Imóveis!</h2>
+  <div class="tabs"><span class="on">Destaques</span><a href="{BASE}imoveis/a-venda/">Ver mais</a></div>
+  <div class="hgrid g4">{"".join(card(i, True) for i in venda) or vazio}</div>
 </div></section>
 <section class="sec"><div class="wrap">
-  <h2 class="h2">Descubra outras possibilidades de imóveis</h2>
+  <h2 class="st">Seu Lar Temporário!</h2>
+  <div class="tabs"><span class="on">Destaques</span><a href="{BASE}imoveis/para-alugar/">Ver mais</a></div>
+  <div class="hgrid g3">{"".join(card(i, True) for i in alug) or vazio}</div>
+</div></section>
+<section class="faixa" style="background-image:{faixa}"><div class="wrap cta3">
+  <a class="cta" href="{BASE}encomende-seu-imovel/">{ICON["enc"]}<h3>Imóvel sob encomenda</h3><p>Descreva o imóvel que você procura e nós avisaremos quando encontrarmos.</p><span>Encomende seu imóvel {ICON["seta"]}</span></a>
+  <a class="cta" href="{BASE}financiamento-e-bancos/">{ICON["din"]}<h3>Financiamento</h3><p>As melhores ofertas de crédito para você financiar seu imóvel.</p><span>Faça uma simulação {ICON["seta"]}</span></a>
+  <a class="cta" href="{BASE}cadastre-seu-imovel/">{ICON["placa"]}<h3>Cadastre seu imóvel</h3><p>Anuncie conosco! Nós encontraremos o melhor negócio para você.</p><span>Cadastre seu imóvel {ICON["seta"]}</span></a>
+</div></section>
+<section class="sec"><div class="wrap center">
+  <div class="ucard"><div class="uh">{logo_img("logo_img_rodape", "logo-sm")}<span class="creci">CRECI: {E(c["creci"])}</span></div>
+    <h3>{E(c["nome"])}</h3><p>{"<br>".join(E(x) for x in [", ".join(end[:2]), end[2] if len(end) > 2 else "", ", ".join(end[3:])] if x)}</p>
+    <p><a href="https://wa.me/{E(c["whatsapp"])}" target="_blank" rel="noopener">{E(c["fone_whats"])}</a><br><a href="tel:+{E(c["fone_fixo_digits"])}">{E(c["fone_fixo"])}</a></p></div>
+  <p class="hor"><b>Horário de funcionamento</b><br>{E(c["horario"])}<br>Para mais informações, entre em contato conosco ou faça-nos uma visita.</p>
+  <p class="hor">CRECI: {E(c["creci"])}</p>
+  <h2 class="acomp">ACOMPANHE-NOS :)</h2>
+  <form class="wform newsf" data-assunto="Quero receber as novidades da Telecasa" data-wa="{E(c["whatsapp"])}"><input name="E-mail" type="email" required placeholder="seunome@email.com.br" aria-label="Seu e-mail"><button type="submit">Enviar</button></form>
+  <h2 class="st sm">Descubra outras possibilidades de imóveis</h2>
   <div class="links">{cats}</div>
-</div></section>
-<section class="sec alt"><div class="wrap">
-  <div class="sh"><h2>Bairros mais populares</h2><span class="car-nav"><button type="button" class="nvb" data-car="-1" aria-label="Anterior">‹</button><button type="button" class="nvb" data-car="1" aria-label="Próximo">›</button></span></div>
-  <div class="carousel" id="bairros">{bairros}</div>
-</div></section>
-<section class="sec"><div class="wrap news">
-  <h2>Acompanhe-nos :)</h2><p>Siga a Telecasa nas redes sociais e veja os imóveis novos primeiro.</p>
-  <p><a class="btn" href="{E(c["instagram"])}" target="_blank" rel="noopener">Instagram</a> <a class="btn" href="{E(c["facebook"])}" target="_blank" rel="noopener">Facebook</a></p>
+  <h2 class="st sm">Bairros mais populares</h2>
+  <div class="links" id="bairros">{bairros}</div>
+  <div class="pgn"><button type="button" data-car="-1">Anterior</button><button type="button" data-car="1">Próximo</button></div>
 </div></section>'''
     return layout(f'{c["nome"]} | {c["slogan"]}', body, path="")
+
 
 
 def page_lista(imoveis, titulo="Imóveis", path="imoveis/", preset=None):

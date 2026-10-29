@@ -8,7 +8,7 @@
   "fone_fixo": "(34) 3313-0800",
   "fone_fixo_digits": "553433130800",
   "endereco": "Rua Doutor Hildebrando Pontes, 278, Mercês, Uberaba/MG",
-  "horario": "Segunda a sexta, das 08:15 às 17:45",
+  "horario": "Segunda a Sexta das 08:15h às 17:45h",
   "instagram": "https://www.instagram.com/telecasa_imobiliaria/",
   "facebook": "https://www.facebook.com/telecasaimobiliaria",
   "quem_somos": [
@@ -82,5 +82,9 @@
     "São Benedito",
     "São Sebastião",
     "Vila Maria Helena"
-  ]
+  ],
+  "logo_img": "https://img.kenlo.io/VWRCUkQ2Tnp3d1BJRDBJVe1szBgxTLVGOsBXp7Jb3Tausvq7IyLq0m1NNXk6UBhFL-hPy3R-Wpsl805m2ZRl4RJ4mNBeU7a-tTKGwojTuofD8hnRxL7zlvX-8uzYYObm77cD9pbUJWOWl+lpHIB7a05zbrEhGxDgB4yKNnYB+GTSqhuTH+sZHzIKh0Q4lBBajk4=.png",
+  "logo_img_rodape": "https://img.kenlo.io/VWRCUkQ2Tnp3d1BJRDBJVe1s0xgxSbBGOsBT9+RO1zjks-ynciLnlXpdKzsuCVZKPvMZhGt-GI0v+QFtypVh7xY3icsFUfjj7HPZg8KoyvKw6mCx17Tqnov84vjeYOqZmYllgfGtSwX9vqM9GtF7aBwjPLgjGBLjVI6NbXIJ-jPJrEHKRfECCXMfjV5qhQ==.png",
+  "hero_img": "https://img.kenlo.io/VWRCUkQ2Tnp3d1BJRDBJVe1syhgxTbVaNJUEv7lV3yqg5eD1Oyn4gikVZ39yExUcaf4KkXJtDMFv90thiZRw7xMjn8UQXbb4ty6CmI+OoNiQrU2N+Y-b+O6Lj52iG-vz7al57YnLNWmRiYoiSowpOhtzbrQlGUC6B9aKYnYO+mHcqkzDRuYZTWMJgwp3vBpLxVS-EML07FM1lnv9DfTdp2PWFO28UQYFWLxDHptvu00c.png",
+  "faixa_img": "https://cdn1.valuegaia.com.br/gaiasite/templates/top_background/BGHOME02.jpg"
 }

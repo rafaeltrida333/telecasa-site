@@ -42,9 +42,18 @@
     if (c && c.trim()) location.href = b.closest("form").action + "?q=" + encodeURIComponent(c.trim());
   });
 
-  // Carrossel de bairros
-  const car = $("#bairros");
-  for (const b of document.querySelectorAll("[data-car]")) b.addEventListener("click", () => car.scrollBy({ left: +b.dataset.car * car.clientWidth * .8, behavior: "smooth" }));
+  // Bairros mais populares: 16 por página, com Anterior e Próximo
+  const bl = [...document.querySelectorAll("#bairros [data-pg]")];
+  if (bl.length) {
+    const last = Math.max(...bl.map(a => +a.dataset.pg)); let pg = 0;
+    const btn = [...document.querySelectorAll("[data-car]")];
+    const show = () => { bl.forEach(a => a.hidden = +a.dataset.pg !== pg); btn.forEach(b => b.disabled = (+b.dataset.car < 0 ? pg === 0 : pg === last)) };
+    btn.forEach(b => b.addEventListener("click", () => { pg = Math.min(last, Math.max(0, pg + +b.dataset.car)); show() }));
+    show();
+  }
+
+  // Fecha os menus suspensos ao clicar fora
+  document.addEventListener("click", e => { for (const d of document.querySelectorAll("details.dd[open]")) if (!d.contains(e.target)) d.open = false });
 
   // Galeria da página do imóvel
   const g = $(".gal");
