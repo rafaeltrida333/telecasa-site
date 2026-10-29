@@ -153,3 +153,5 @@ nav#nav a{text-decoration:none;color:var(--pri);padding:10px 12px;border-radius:
 .wa-float svg{width:26px;height:26px}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 .wform.newsf{background:none;border:0;box-shadow:none;padding:0;flex-wrap:nowrap;max-width:600px;margin:0 auto}
+/* Marca d'água nas fotos que vêm de fora; as fotos do CRM já saem com o logo aplicado */
+.wm{position:relative}.wm::after{content:"";position:absolute;inset:0;background:url("logo.png") center/36% auto no-repeat;opacity:.6;pointer-events:none}

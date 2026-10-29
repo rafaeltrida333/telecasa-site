@@ -61,7 +61,7 @@
     const fotos = JSON.parse($("#gdata").textContent), img = $("#gmain"), gc = $("#gc"), th = [...g.querySelectorAll(".th")];
     let i = 0;
     const show = k => {
-      i = (k + fotos.length) % fotos.length; img.src = fotos[i];
+      i = (k + fotos.length) % fotos.length; img.src = fotos[i]; img.parentNode.classList.toggle("wm", /^https:/.test(fotos[i]));
       img.alt = img.alt.replace(/foto \d+ de/, "foto " + (i + 1) + " de"); gc.textContent = (i + 1) + " / " + fotos.length;
       th.forEach((t, j) => t.setAttribute("aria-current", j === i));
     };

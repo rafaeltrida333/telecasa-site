@@ -85,14 +85,17 @@ FOTO_EXT = re.compile(r"https://lh3\.googleusercontent\.com/[A-Za-z0-9_=/.-]{10,
 
 def _read(name):
     p = os.path.join(ROOT, "data", name)
-    return json.load(open(p, encoding="utf-8")).get("imoveis", []) if os.path.exists(p) else []
+    return json.load(open(p, encoding="utf-8")) if os.path.exists(p) else {}
 
 
 def load_imoveis():
     """Imóveis do CRM (data/imoveis.json) mais os importados do Kenlo (data/kenlo.json).
     Quando o código se repete, vale o do CRM."""
     out, vistos = [], set()
-    for i in _read("imoveis.json") + _read("kenlo.json"):
+    crm = _read("imoveis.json")
+    # Depois que os imóveis do Kenlo foram levados ao CRM, o CRM manda em tudo e data/kenlo.json deixa de ser usado
+    kenlo = [] if crm.get("substituiKenlo") else _read("kenlo.json").get("imoveis", [])
+    for i in crm.get("imoveis", []) + kenlo:
         if not i.get("codigo") or str(i["codigo"]) in vistos:
             continue
         vistos.add(str(i["codigo"]))
@@ -102,6 +105,31 @@ def load_imoveis():
     out.sort(key=lambda i: str(i.get("publicadoEm") or ""), reverse=True)
     out.sort(key=lambda i: not i.get("destaque"))
     return out
+
+
+def marca_dagua(raw):
+    """Aplica o logo da Telecasa no centro da foto (precisa do Pillow; sem ele a foto sai como veio).
+    As fotos que vêm de fora (Kenlo) recebem o logo por cima, pelo CSS."""
+    try:
+        from PIL import Image
+        import io
+    except ImportError:
+        print("aviso: Pillow não instalado, fotos sem marca d'água", file=sys.stderr)
+        return raw
+    try:
+        im = Image.open(io.BytesIO(raw)).convert("RGB")
+        logo = Image.open(os.path.join(ROOT, "assets", "logo.png")).convert("RGBA")
+        w = max(80, int(im.width * .36))
+        logo = logo.resize((w, round(logo.height * w / logo.width)), Image.LANCZOS)
+        logo.putalpha(logo.getchannel("A").point(lambda a: int(a * .6)))
+        base = im.convert("RGBA")
+        base.alpha_composite(logo, ((im.width - logo.width) // 2, (im.height - logo.height) // 2))
+        out = io.BytesIO()
+        base.convert("RGB").save(out, "JPEG", quality=86)
+        return out.getvalue()
+    except Exception as e:
+        print("aviso: marca d'água falhou:", e, file=sys.stderr)
+        return raw
 
 
 def write_fotos(imoveis):
@@ -126,7 +154,7 @@ def write_fotos(imoveis):
                     print("aviso: foto inválida", f, file=sys.stderr)
                     continue
                 with open(os.path.join(dst, f + ".jpg"), "wb") as fh:
-                    fh.write(base64.b64decode(m.group(2)))
+                    fh.write(marca_dagua(base64.b64decode(m.group(2))))
                 have.add(f)
             ok.append(f)
         i["fotos"] = ok
@@ -276,7 +304,7 @@ def card(i, mini=False):
     extra = "" if mini else f'''<div class="ct">{E(i.get("tipo"))} · {E(tag)}</div>
   {f'<div class="spec">{" · ".join(E(s) for s in spec)}</div>' if spec else ""}'''
     return f'''<article class="card{" mini" if mini else ""}" {attrs}><a href="{BASE}imovel/{i["slug"]}/">
-  <div class="ph">{capa}</div>
+  <div class="ph{" wm" if i["fotos"] and i["fotos"][0].startswith("https://") else ""}">{capa}</div>
   <div class="cb"><div class="loc">{E(loc)}</div>{extra}
   <div class="price">{E(preco(i))}</div>
   {"" if mini else f'<div class="cod">Código {E(i["codigo"])}</div>'}</div></a></article>'''
@@ -391,7 +419,7 @@ def page_imovel(i):
     if fotos:
         thumbs = "".join(f'<button type="button" class="th" data-i="{k}" aria-label="Ver foto {k+1}"><img src="{foto_url(f)}" alt="" loading="lazy"></button>' for k, f in enumerate(fotos))
         gal = f'''<div class="gal" data-n="{len(fotos)}">
-  <div class="main"><img id="gmain" src="{foto_url(fotos[0])}" alt="{E(i.get("titulo"))}, foto 1 de {len(fotos)}" width="1200" height="900">
+  <div class="main{" wm" if fotos[0].startswith("https://") else ""}"><img id="gmain" src="{foto_url(fotos[0])}" alt="{E(i.get("titulo"))}, foto 1 de {len(fotos)}" width="1200" height="900">
   {'<button type="button" class="nv prev" aria-label="Foto anterior">‹</button><button type="button" class="nv next" aria-label="Próxima foto">›</button>' if len(fotos) > 1 else ''}<span class="gc" id="gc">1 / {len(fotos)}</span></div>
   {f'<div class="thumbs">{thumbs}</div>' if len(fotos) > 1 else ''}
   <script type="application/json" id="gdata">{json.dumps([foto_url(f) for f in fotos])}</script>
