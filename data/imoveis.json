@@ -1,5 +1,5 @@
 {
- "gerado": "2026-10-30T18:09:46.925Z",
+ "gerado": "2026-10-30T18:09:54.897Z",
  "substituiKenlo": true,
  "imoveis": [
   {
@@ -275,7 +275,7 @@
    "bairro": "Santa Maria",
    "cidade": "Uberaba",
    "aceitaNegociacao": false,
-   "andar": 4,
+   "andar": "4",
    "empreendimento": "Condominio Up Valle",
    "destaque": true,
    "fotos": [
