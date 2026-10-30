@@ -1,5 +1,5 @@
 {
- "gerado": "2026-10-30T18:08:14.002Z",
+ "gerado": "2026-10-30T18:09:46.925Z",
  "substituiKenlo": true,
  "imoveis": [
   {
@@ -297,10 +297,9 @@
    "id": "kenlo-86176538",
    "codigo": "AP0096",
    "titulo": "Apartamento com 2 dormitórios - venda por R$ 370.000,00 ou aluguel por R$ 2.385,00/mês - Jardim do Lago - Uberaba/MG",
-   "pretensao": "Venda e aluguel",
+   "pretensao": "Venda",
    "tipo": "Apartamento",
    "valorVenda": 370000,
-   "valorAluguel": 1800,
    "condominio": 585,
    "areaTotal": 52.87,
    "quartos": 2,
@@ -312,7 +311,7 @@
    "bairro": "Jardim do Lago",
    "cidade": "Uberaba",
    "aceitaNegociacao": false,
-   "andar": 3,
+   "andar": "3",
    "empreendimento": "Condominio Debran Residence",
    "destaque": true,
    "fotos": [
