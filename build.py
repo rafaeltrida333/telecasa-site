@@ -552,6 +552,9 @@ def main():
         write(path + "index.html", content)
     for i in imoveis:
         write(f'imovel/{i["slug"]}/index.html', page_imovel(i))
+        # link fixo pelo código (usado pelo botão "Ver no site" do CRM)
+        dest = f'{BASE}imovel/{i["slug"]}/'
+        write(f'imovel/{i["codigo"].lower()}/index.html', f'<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex"><link rel="canonical" href="{dest}"><meta http-equiv="refresh" content="0;url={dest}"><a href="{dest}">Ver imóvel {E(i["codigo"])}</a>')
     for name, content in static_pages().items():
         write(f"{name}/index.html", content)
     write("404.html", layout(f'Página não encontrada | {CFG["nome"]}', f'<section class="sec"><div class="wrap narrow"><h1 class="pt">Página não encontrada</h1><p class="lead">Este imóvel pode ter sido vendido ou alugado.</p><p><a class="btn pri" href="{BASE}imoveis/">Ver imóveis disponíveis</a></p></div></section>'))
