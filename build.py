@@ -80,6 +80,21 @@ def preco(i):
     return " · ".join(parts) or "Valor sob consulta"
 
 
+def precos_html(i):
+    # Página do imóvel: valor de venda, de aluguel e condomínio, cada um na sua linha
+    f = finalidade(i)
+    v = money(i.get("valorVenda")) if f["venda"] else ""
+    a = money(i.get("valorAluguel")) if f["aluguel"] else ""
+    c = money(i.get("condominio"))
+    linhas = [(k, x) for k, x in [("Venda", v), ("Aluguel", a and a + "/mês")] if x]
+    if not linhas:
+        return '<div class="price big">Valor sob consulta</div>'
+    h = "".join(f'<div class="pl"><span>{E(k)}</span><div class="price big">{E(x)}</div></div>' for k, x in linhas)
+    if c:
+        h += f'<div class="pl pc"><span>Condomínio</span><b>{E(c)}/mês</b></div>'
+    return h
+
+
 FOTO_EXT = re.compile(r"https://lh3\.googleusercontent\.com/[A-Za-z0-9_=/.-]{10,400}")
 
 
@@ -437,7 +452,7 @@ def page_imovel(i):
     body = f'''<section class="sec im"><div class="wrap">
   <nav class="crumb" aria-label="Você está em"><a href="{BASE}">Início</a> › <a href="{BASE}imoveis/">Imóveis</a> › {E(i["codigo"])}</nav>
   <div class="imh"><div><div class="loc">{E(i.get("tipo"))} · {E(i.get("pretensao"))}</div><h1>{E(i.get("titulo"))}</h1><p class="addr">{E(end)}</p></div>
-    <div class="pbox"><div class="price big">{E(preco(i))}</div>{'<div class="neg">Aceita negociação</div>' if i.get("aceitaNegociacao") else ''}<div class="cod">Código {E(i["codigo"])}</div></div></div>
+    <div class="pbox">{precos_html(i)}{'<div class="neg">Aceita negociação</div>' if i.get("aceitaNegociacao") else ''}<div class="cod">Código {E(i["codigo"])}</div></div></div>
   {gal}
   <div class="imb">
     <div>
