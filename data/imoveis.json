@@ -1,5 +1,5 @@
 {
- "gerado": "2026-11-06T13:29:18.832Z",
+ "gerado": "2026-11-06T13:29:36.679Z",
  "substituiKenlo": true,
  "imoveis": [
   {
@@ -808,9 +808,10 @@
    "id": "kenlo-86125964",
    "codigo": "CA0153",
    "titulo": "Casa 2 quartos e 2 salas (diferencial, sala e garagem com pé direito de 4m² de altura)",
-   "pretensao": "Venda",
+   "pretensao": "Venda e aluguel",
    "tipo": "Casa",
    "valorVenda": 280000,
+   "valorAluguel": 1600,
    "areaTotal": 200,
    "quartos": 2,
    "banheiros": 1,
