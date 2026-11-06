@@ -155,3 +155,5 @@ nav#nav a{text-decoration:none;color:var(--pri);padding:10px 12px;border-radius:
 .wform.newsf{background:none;border:0;box-shadow:none;padding:0;flex-wrap:nowrap;max-width:600px;margin:0 auto}
 /* Marca d'água nas fotos que vêm de fora; as fotos do CRM já saem com o logo aplicado */
 .wm{position:relative}.wm::after{content:"";position:absolute;inset:0;background:url("logo.png") center/36% auto no-repeat;opacity:.6;pointer-events:none}
+/* página do imóvel: venda, aluguel e condomínio em linhas separadas */
+.pl{margin-bottom:8px}.pl span{display:block;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--mut)}.pl.pc b{font-size:17px;color:var(--ink)}
