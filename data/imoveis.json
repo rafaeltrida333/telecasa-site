@@ -1,7 +1,42 @@
 {
- "gerado": "2026-11-17T18:55:36.759Z",
+ "gerado": "2026-11-17T19:00:20.319Z",
  "substituiKenlo": true,
  "imoveis": [
+  {
+   "id": "crm-ahk26bc5ubcrer9",
+   "codigo": "CA0159",
+   "titulo": "Casa com 2 quartos para alugar, 53 m² - JD DO LAGO",
+   "pretensao": "Aluguel",
+   "tipo": "Casa",
+   "valorAluguel": 2200,
+   "condominio": 550,
+   "areaUtil": 53,
+   "quartos": 2,
+   "suites": 1,
+   "banheiros": 2,
+   "vagas": 1,
+   "descricao": "partamento para alugar no Debran 🔑\r\n\r\n💰 R$ 2.200/mês com condomínio 🛏️ 2 quartos, sendo 1 suíte 💧 Água e gás inclusos no condomínio 🍳 Armários na cozinha e nos banheiros 🏊 Condomínio com lazer completo",
+   "bairro": "JD DO LAGO",
+   "cidade": "UBERABA",
+   "aceitaNegociacao": false,
+   "andar": "TÉRREO",
+   "destaque": false,
+   "fotos": [
+    "ahk26bc5ubcrer9_whats_app_image_2026_11_17_at_13_50_5clsbsq3z4_18",
+    "ahk26bc5ubcrer9_whats_app_image_2026_11_17_at_13_50_hnbgidrwvn_173",
+    "ahk26bc5ubcrer9_whats_app_image_2026_11_17_at_13_50_qhm0e8gwew_172",
+    "ahk26bc5ubcrer9_whats_app_image_2026_11_17_at_13_50_1q2bpwosg3_171",
+    "ahk26bc5ubcrer9_whats_app_image_2026_11_17_at_13_50_gj45ua0pf7_17",
+    "ahk26bc5ubcrer9_whats_app_image_2026_11_17_at_13_50_l4hgmduuiz_163",
+    "ahk26bc5ubcrer9_whats_app_image_2026_11_17_at_13_50_ysokl7vysc_162",
+    "ahk26bc5ubcrer9_whats_app_image_2026_11_17_at_13_50_5ergaym0oh_161",
+    "ahk26bc5ubcrer9_whats_app_image_2026_11_17_at_13_50_pyif1cuy6e_16",
+    "ahk26bc5ubcrer9_whats_app_image_2026_11_17_at_13_50_vbx6uh3u6u_152",
+    "ahk26bc5ubcrer9_whats_app_image_2026_11_17_at_13_50_yir55yz69g_151"
+   ],
+   "corretor": "Telecasa",
+   "publicadoEm": "2026-11-17T19:00:09"
+  },
   {
    "id": "crm-se21a6221rer86s",
    "codigo": "AP0105",
