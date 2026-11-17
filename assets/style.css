@@ -157,3 +157,15 @@ nav#nav a{text-decoration:none;color:var(--pri);padding:10px 12px;border-radius:
 .wm{position:relative}.wm::after{content:"";position:absolute;inset:0;background:url("logo.png") center/36% auto no-repeat;opacity:.6;pointer-events:none}
 /* página do imóvel: venda, aluguel e condomínio em linhas separadas */
 .pl{margin-bottom:8px}.pl span{display:block;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--mut)}.pl.pc b{font-size:17px;color:var(--ink)}
+
+/* Textos e fotos maiores (pedido de 17/11/2026) */
+body{font-size:16px}
+.hnav{font-size:15px}
+.bf select{font-size:14.5px}.bf.q input{font-size:14px}.pill{font-size:14px}.busca .btn{font-size:15px}
+.st{font-size:22px}.st.sm{font-size:21px}.tabs{font-size:14px}
+.grid{grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+.loc{font-size:15.5px}.ct{font-size:14px}.price{font-size:17px}.spec{font-size:14.5px}.cod{font-size:13px}
+.cta p{font-size:15.5px}.cta span{font-size:14.5px}
+.ucard p{font-size:14px}.hor{font-size:14px}.links a{font-size:14px}
+.crumb{font-size:15px}.specs span{font-size:14px}.specs b{font-size:19px}
+@media(min-width:1100px){body{zoom:1.1}}
