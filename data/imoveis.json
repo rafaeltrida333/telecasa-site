@@ -1,5 +1,5 @@
 {
- "gerado": "2026-11-17T17:25:00.452Z",
+ "gerado": "2026-11-17T17:25:20.996Z",
  "substituiKenlo": true,
  "imoveis": [
   {
@@ -728,39 +728,6 @@
    ],
    "corretor": "Telecasa",
    "publicadoEm": "2026-08-20T12:50:25"
-  },
-  {
-   "id": "kenlo-85263889",
-   "codigo": "AP0088",
-   "titulo": "Apartamento com 2 dormitórios, 47 m² - venda por R$ 230.000,00 ou aluguel por R$ 1.800,00/mês - Quinta Boa Esperança - Uberaba/MG",
-   "pretensao": "Venda e aluguel",
-   "tipo": "Apartamento",
-   "valorVenda": 230000,
-   "valorAluguel": 1800,
-   "areaUtil": 47.57,
-   "quartos": 2,
-   "banheiros": 1,
-   "vagas": 1,
-   "descricao": "Elevador, garagem coberta, armário em um dos quartos, armário na cozinha e banheiro e ar condicionado em um dos quartos,Quinto andar, frente para mogiana. VALOR DE LOCAÇÃO INCLUSO CONDOMINIO: 1.800,00Excelente localização.VALOR DE VENDA: 230.000,00",
-   "caracteristicas": "Armários na cozinha, Armários no banheiro, Piso laminado, Portão eletrônico, Ar-condicionado, Elevador",
-   "bairro": "Quinta Boa Esperança",
-   "cidade": "Uberaba",
-   "aceitaNegociacao": false,
-   "andar": 5,
-   "empreendimento": "Cond Unique I",
-   "destaque": true,
-   "fotos": [
-    "https://lh3.googleusercontent.com/LMbCT1ZGUvTuCkDt3E0rgh1FIkwQ6cl1JLyuhU114fdPCpNHtw_QJ1YhDi39959fu8efAJaHcEgcSOF_PovKd-o6xdORJJ8b3mtlOEMoNboKTVA=w1920-h1080",
-    "https://lh3.googleusercontent.com/BTMVvw2lw77pTUOBkpp-FI8lJsWAp3-7bhmEUcoKGAkwbhLJ3ON27PnDSPOcKCIGFARz7F2BgwQsXnoO6t9or7OKLs76rfRWskAWbM85LhoL4X4=w1920-h1080",
-    "https://lh3.googleusercontent.com/qlVpcHI1Nxs5khwbmSnDFg8fxObJwSRgBejYt9kbUAxBdHA9sz4Gbmyjur_264pjrFz-8JiqTYvvM--E7jXmYDgvqr3KsN7rvCVquhSxVIVijwNZ=w1920-h1080",
-    "https://lh3.googleusercontent.com/kPAB1nS8n0l41iV3FR0OeydUw-czzfopfTPJpIGbWtNf4rQMG_WIUiQdaQ5_cXo0T6Gr3nyqMBseIWv4jbiS8yDlAJPFTPaKbkHEbPLe0Q9uXQ=w1920-h1080",
-    "https://lh3.googleusercontent.com/UP3yjynK7hRLRVPxCqtlEBGq3Uaoac4RgQFissmCjIRjrfTGVnzarwHyWoqTcQizIMCb3vFX20ZVg1hAqUKBwS7o8QezPHvBnbV4m_v0Cv8pVlc=w1920-h1080",
-    "https://lh3.googleusercontent.com/37RYLAyvhcIicMFIVALNzwG5KkQzO7vY-rb4tA6IU7X4DkUKPI0DsF75qwjYJjp7LAhpBm8o3L15Almn3XjIK2GUcTlyfaEngzDdQxvpi3sAMEQ=w1920-h1080",
-    "https://lh3.googleusercontent.com/RCKXYxan8WGnXhepgsq4eKOGTpES9oUWtorrkPBDCpXh25RWbNKuUoAgV4XI9tdSbnTqf8uq1tFXGr6w32naX102zhHoQpNw3_u_IGtsh1Qv7Sw=w1920-h1080",
-    "https://lh3.googleusercontent.com/E6HCZF3m6QGjJC51V0CmU-nEOPbDfYEHfB_dh3FSUAFz364oSfNU0qeOcakqO9aOixGs3Uagam0J8E95s-ryNepmSZPNZf77ohABeGa266ZT-6c=w1920-h1080"
-   ],
-   "corretor": "Telecasa",
-   "publicadoEm": "2026-08-20T12:35:24"
   },
   {
    "id": "kenlo-82902294",
