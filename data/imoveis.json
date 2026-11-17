@@ -1,5 +1,5 @@
 {
- "gerado": "2026-11-16T20:08:34.698Z",
+ "gerado": "2026-11-17T17:25:00.452Z",
  "substituiKenlo": true,
  "imoveis": [
   {
@@ -580,48 +580,6 @@
    ],
    "corretor": "Telecasa",
    "publicadoEm": "2026-08-27T14:36:57"
-  },
-  {
-   "id": "kenlo-86156866",
-   "codigo": "AP0095",
-   "titulo": "Apartamento com 2 dormitórios para alugar por R$ 3.600/mês - São Sebastião - Uberaba/MG",
-   "pretensao": "Aluguel",
-   "tipo": "Apartamento",
-   "valorAluguel": 3000,
-   "condominio": 600,
-   "areaTotal": 70,
-   "quartos": 2,
-   "suites": 2,
-   "banheiros": 2,
-   "descricao": "APTO EM EXCELENTE LOCALIZAÇAO, COM DUAS SUÍTES, SALA EM L, COZINHA, LAVABO. ÁREA DE LAZER, VALOR 3.000,00CONDOMINIO 600,00",
-   "caracteristicas": "Piscina, Churrasqueira, Lavabo, Lavanderia, Copa, Armários na cozinha, Armários no banheiro, Armários nos quartos, Piso porcelanato, Portão eletrônico, Elevador, Sacada",
-   "bairro": "São Sebastião",
-   "cidade": "Uberaba",
-   "aceitaNegociacao": false,
-   "andar": 9,
-   "empreendimento": "Edifício Unique",
-   "destaque": true,
-   "fotos": [
-    "https://lh3.googleusercontent.com/XL9bVyGKXhPuEkSEptVSOfUza8MS2E6P6S4pMbPTba7pLWiXWHqb23qBdqf8ZREsw2va6Zgo5Zfy5cIXVp9J93UZgvmWuYZ4BRfERQJwWAi1RQ1R=w1920-h1080",
-    "https://lh3.googleusercontent.com/VmTP8frQEvygqHnzSQ7diVNYF8s5OiB0gPNnFqOjYDm5G968PTa6NAxFt0sX32F-i4XjRXjzZwcWjKDrj1GyTbgTyD2yIPVlToHRQ7vR8WNDkAU=w1920-h1080",
-    "https://lh3.googleusercontent.com/j4SM8l2OPdvhQjMt34fDb712__FwjispJgVreU4aUtLDuHy6tRm_f0gIYN6PDjY0k7aT9lrdVjYeU1QKNOTQK6gVE9SHBuomjG0idpvLpa2S34T5=w1920-h1080",
-    "https://lh3.googleusercontent.com/Y_gHROALEyR1BFH2iiipUQ1VIabQnJXO2ERapuxDj48dOjaDFW7QR0AKs3uMUVP7xL7mRJLCt1APkeSCnlSLTZhU6o_9wq79WCed69ghHypUzkI=w1920-h1080",
-    "https://lh3.googleusercontent.com/puJv9x94-KCPn4KN66E0BZJfbp2NxTAwgutMnhp6liPWETwxGWBIjYawNsBzuTKIXV4IMIcbMHVEEHyafpydBkHd6R5wLjVZH7qMr6opzqKX-9d0=w1920-h1080",
-    "https://lh3.googleusercontent.com/JP0jqizMIn734MmfTsekndt_b_VndjF8NOHxbBo2g6DQS6rEkASVnlBkSomB8-duLyYlMbX-3cN6-VK4DRP2nOfZtx0vnT_kzshBLMsvFARXDg=w1920-h1080",
-    "https://lh3.googleusercontent.com/S79svNFlPUDMspBgpH2aqh0d4vUOExP1VJYDI_aGbKIgTljRJBo06NJ2CQVvocEsulKljse686l8bP0f11GnQAMRi0rVsz-xh-c9icjeWifH1-U=w1920-h1080",
-    "https://lh3.googleusercontent.com/MwMtpoOypE9pbde2xJ2PM78SuCTd4b94j2f02cGD9SOP0MtZM5SRcUP616aFxrOtD3JfSkAYjcqvFCHycDbcpoMlhIRtZNunQbzCBht9YXTZ=w1920-h1080",
-    "https://lh3.googleusercontent.com/VdXmry_2Nk0PxjN2KVEYTDkcZJs-3AlAF4VvKH5P3WkTZzcyb_zGTHVqfOzTF9TMezuuS4fuo-7xW38g62e7Bo-NUjxkAIl7BbJmBK87VSIYyBkb=w1920-h1080",
-    "https://lh3.googleusercontent.com/ewH-WpYujbuq97JKCjG9J0D-Edwf1CBpvD1PF3-OwcMAV9smRDj8qMttSQKonF2Dl0szgVPLJVuEsxogzq778uJ4GQXSqz_C75_3v8Lv4Aw0DiU=w1920-h1080",
-    "https://lh3.googleusercontent.com/f60YT_YVUjk6i70R-P0doj1GoxGhi7tYBiHvwhRFSRerBa_j5duatvzyYXWEEQpS2BNmacLkoSTjmwbpeh7zgtWiRLdkxAGok66EhekJ3sCbeVk=w1920-h1080",
-    "https://lh3.googleusercontent.com/NZzCQ3FqFUN3BuAE_w7lXTvwEOGSclx_hLnaw2Fc_8eC_bPM6isfMPW8B8YtNf2cdFMz0RyuPFctUvqBzcqibQM4ocwwSjYljTCo1CxIjqqdxg=w1920-h1080",
-    "https://lh3.googleusercontent.com/QFc3ikDF0USDb3YRSTNlBwG9_yrrKUxPnWmz1rmhFWQcHPqzhuSmeHwiNt9o9Rezr1OIto5R5y5G34uOt8POHBrNqSKGo9G7ifgRmEaG9oTzJbw=w1920-h1080",
-    "https://lh3.googleusercontent.com/w5N8AQbYrZo2vgAPlL2Z9qn4LirdZMBbE0yMiUvWeGZb9SHcylxUtChEyDZVn7wdXQA5fomsgcZ0vn8Du-AyB5poW_kEMjf9QlEYdWO3lGee_Jk=w1920-h1080",
-    "https://lh3.googleusercontent.com/Y18SEnBaTOWPGcB9RNs6iDwqXD6c9WhTLIQz5UEKwVD8XiZO1liolKJeEC3KGneqaVV-5J2XyubKtUdqKc0r6v99KLjNzA0jVpsHgH84Fbh5_xeq=w1920-h1080",
-    "https://lh3.googleusercontent.com/4wX1C9bbKPtHvr_LaXQUEiLFriqBCutNhAxbhK_ff6dBuV9-vVE83RcDrS3lhJmVgMFvbFvm-RJY5kiO_rKijgwtc2P8EM1sL8AQEE7vhQKvZaiA=w1920-h1080",
-    "https://lh3.googleusercontent.com/L4Ufif7925HYcia4TW0WrO7mTTpw6kB9wWpP-geAQBz_gHWzfyDKcrcm0-bpwgb4gdluKAEM5cZ10icwTlm9fpPp3B9zyXAlwjsVBZn1eDXkrjk=w1920-h1080"
-   ],
-   "corretor": "Telecasa",
-   "publicadoEm": "2026-08-25T11:56:43"
   },
   {
    "id": "kenlo-84233661",
