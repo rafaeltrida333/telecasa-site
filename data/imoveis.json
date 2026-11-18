@@ -1,5 +1,5 @@
 {
- "gerado": "2026-11-18T19:17:00.928Z",
+ "gerado": "2026-11-18T19:17:07.622Z",
  "substituiKenlo": true,
  "imoveis": [
   {
@@ -1226,7 +1226,7 @@
    "titulo": "Casa com 3 dormitórios à venda por R$ 600.000 - Vila Celeste - Uberaba/MG",
    "pretensao": "Venda",
    "tipo": "Casa",
-   "valorVenda": 600000,
+   "valorVenda": 550000,
    "quartos": 3,
    "suites": 1,
    "banheiros": 3,
