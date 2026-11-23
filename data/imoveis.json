@@ -1,5 +1,5 @@
 {
- "gerado": "2026-11-18T19:17:15.908Z",
+ "gerado": "2026-11-23T20:26:08.478Z",
  "substituiKenlo": true,
  "imoveis": [
   {
@@ -1714,9 +1714,10 @@
    "id": "kenlo-84232837",
    "codigo": "CA0141",
    "titulo": "Casa com 3 dormitórios à venda por R$ 750.000 - Olinda - Uberaba/MG",
-   "pretensao": "Venda",
+   "pretensao": "Venda e aluguel",
    "tipo": "Casa",
    "valorVenda": 750000,
+   "valorAluguel": 4200,
    "quartos": 3,
    "suites": 1,
    "banheiros": 3,
