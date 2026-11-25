@@ -1,5 +1,5 @@
 {
- "gerado": "2026-11-25T19:14:36.838Z",
+ "gerado": "2026-11-25T19:14:56.247Z",
  "substituiKenlo": true,
  "imoveis": [
   {
@@ -406,7 +406,7 @@
    "titulo": "Casa com 2 dormitórios à venda, 84 m² por R$ 310.000,00 - Ilha Bela - Uberaba/MG",
    "pretensao": "Venda",
    "tipo": "Casa",
-   "valorVenda": 310000,
+   "valorVenda": 298000,
    "areaUtil": 84,
    "areaTotal": 200,
    "quartos": 2,
