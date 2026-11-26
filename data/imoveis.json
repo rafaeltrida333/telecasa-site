@@ -1,5 +1,5 @@
 {
- "gerado": "2026-11-26T18:44:46.286Z",
+ "gerado": "2026-11-26T20:02:44.872Z",
  "substituiKenlo": true,
  "imoveis": [
   {
@@ -46,12 +46,12 @@
   {
    "id": "crm-ao1n4sck34snhmk",
    "codigo": "AP0109",
-   "titulo": "Apartamento para alugar, 39 m² - Jardim do Lago",
+   "titulo": "Apartamento para alugar, 42 m² - Jardim do Lago",
    "pretensao": "Aluguel",
    "tipo": "Apartamento",
    "valorAluguel": 1300,
    "condominio": 419,
-   "areaUtil": 39,
+   "areaUtil": 42,
    "vagas": 1,
    "caracteristicas": "Interfone, Churrasqueira, Piscina, Playground, Quadra poliesportiva",
    "bairro": "Jardim do Lago",
