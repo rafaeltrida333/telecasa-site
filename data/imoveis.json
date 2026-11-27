@@ -1,7 +1,37 @@
 {
- "gerado": "2026-11-27T15:34:24.363Z",
+ "gerado": "2026-11-27T15:34:37.406Z",
  "substituiKenlo": true,
  "imoveis": [
+  {
+   "id": "crm-c59ghessxv18o5t",
+   "codigo": "CA0162",
+   "titulo": "Casa com 2 quartos para alugar, 63,8 m² - ANTONIO CAIADO",
+   "pretensao": "Aluguel",
+   "tipo": "Casa",
+   "valorAluguel": 1200,
+   "areaUtil": 63.8,
+   "areaTotal": 200,
+   "quartos": 2,
+   "suites": 1,
+   "banheiros": 2,
+   "descricao": "2 quartos com 1 suite\r\n1 banheiro social \r\nSala de estar e cozinha , GARAGEM COBERTA",
+   "bairro": "ANTONIO CAIADO",
+   "cidade": "UBERABA",
+   "aceitaNegociacao": false,
+   "destaque": false,
+   "fotos": [
+    "c59ghessxv18o5t_whats_app_image_2026_09_16_at_00_40_qcb5nt9b88_091",
+    "c59ghessxv18o5t_whats_app_image_2026_09_16_at_00_40_7tax1aqzh3_112",
+    "c59ghessxv18o5t_whats_app_image_2026_09_16_at_00_40_3xm3ap0syo_111",
+    "c59ghessxv18o5t_whats_app_image_2026_09_16_at_00_40_yqne3m4mx3_11",
+    "c59ghessxv18o5t_whats_app_image_2026_09_16_at_00_40_ib113nhrmh_102",
+    "c59ghessxv18o5t_whats_app_image_2026_09_16_at_00_40_xw8ui1hyjy_101",
+    "c59ghessxv18o5t_whats_app_image_2026_09_16_at_00_40_tpmil3w2je_10",
+    "c59ghessxv18o5t_whats_app_image_2026_09_16_at_00_40_v7vxyug7j6_09"
+   ],
+   "corretor": "Telecasa",
+   "publicadoEm": "2026-11-27T15:34:25"
+  },
   {
    "id": "crm-kpzf8af6eitwh7h",
    "codigo": "AP0111",
