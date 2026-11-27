@@ -1,7 +1,42 @@
 {
- "gerado": "2026-11-27T15:34:50.792Z",
+ "gerado": "2026-11-27T17:42:14.891Z",
  "substituiKenlo": true,
  "imoveis": [
+  {
+   "id": "crm-40csyqyj7rz3q5w",
+   "codigo": "AP0112",
+   "titulo": "Apartamento à venda, 72 m² - Vila Frei Eugênio",
+   "pretensao": "Venda",
+   "tipo": "Apartamento",
+   "valorVenda": 560000,
+   "areaUtil": 72,
+   "suites": 1,
+   "banheiros": 2,
+   "vagas": 2,
+   "descricao": "-Residencial portaria 24 horas\r\n-Área lazer com:\r\n-Piscina, Espaço gourmet, play ground e Academia.\r\n-Apenas 08 minutos do centro\r\n\r\n-Apto. com 72m área útil\r\n-Acabamento de primeira\r\n\r\n-03 quartos(sendo 01 suíte)\r\n-Armários planejados em MDF\r\n-banheiros com box blindex e armários\r\n-Piso porcelanato\r\n-Sala 02 ambientes\r\n-Cozinha planejada\r\n-área serviço\r\n-02 garagem\r\n-Vista para o lago (sol da manhã)\r\n\r\nComodidades:\r\nPiscina \r\nSalão de festa \r\nSol da manhã \r\nPortaria 24 Horas\r\n14° Andar",
+   "caracteristicas": "Churrasqueira, Piscina, Playground",
+   "bairro": "Vila Frei Eugênio",
+   "cidade": "Uberaba",
+   "aceitaNegociacao": false,
+   "andar": "14",
+   "empreendimento": "Sunset",
+   "destaque": false,
+   "fotos": [
+    "40csyqyj7rz3q5w_sala_2_uyuvsyczvp",
+    "40csyqyj7rz3q5w_banheiro_1_dscwynbp40",
+    "40csyqyj7rz3q5w_banheiro_2_28okvf91vd",
+    "40csyqyj7rz3q5w_cozinha_5hgffma8ht",
+    "40csyqyj7rz3q5w_quarto_1_x95ma9o8hm",
+    "40csyqyj7rz3q5w_quarto_2_bqm5gf5r4p_1",
+    "40csyqyj7rz3q5w_quarto_3_9ht06bb8dn",
+    "40csyqyj7rz3q5w_sala_3_xm5k7qi9az",
+    "40csyqyj7rz3q5w_sala_9c51sznjnw",
+    "40csyqyj7rz3q5w_whats_app_image_2026_11_23_at_12_08_u43p5253zm_22PM",
+    "40csyqyj7rz3q5w_whats_app_image_2026_11_23_at_12_08_joa8gy1t2d_24PM"
+   ],
+   "corretor": "Telecasa",
+   "publicadoEm": "2026-11-27T17:42:03"
+  },
   {
    "id": "crm-c59ghessxv18o5t",
    "codigo": "CA0162",
